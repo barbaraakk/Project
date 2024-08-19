@@ -1,9 +1,7 @@
-/* Importa a fonte Quicksand do Google Fonts */
-
+/* Importa as fontes do Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
-
 
 /* Define o tamanho da fonte base e a fonte padrão para a página */
 html,
@@ -15,6 +13,7 @@ body {
     font-size: 62.5%; /* Define o tamanho da fonte base para 10px */
 }
 
+/* Estilo para os links na navbar */
 .nav a {
     font-family: 'Bebas Neue', cursive;
 }
@@ -111,8 +110,6 @@ body {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7); /* Sombra mais intensa quando hover */
     outline: none;
 }
-
-
 
 /* Botão de menu responsivo (hamburger) */
 .navTrigger {
@@ -228,6 +225,7 @@ body {
 .affix {
     background-color: #111;
 }
+
 /* Footer */
 .footer {
     background-color: #111; /* Cor de fundo do footer */

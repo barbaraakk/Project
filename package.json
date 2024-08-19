@@ -1,14 +1,14 @@
 {
   "name": "twitter-api-project",
   "version": "1.0.0",
+  "description": "A project to display tweets from a specific Twitter account using the Twitter API.",
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["twitter", "api", "express"],
+  "author": "Barbaraakk",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "axios": "^1.7.4",
     "dotenv": "^16.4.5",
