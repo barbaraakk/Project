@@ -1,0 +1,300 @@
+/* Importa a fonte Quicksand do Google Fonts */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
+
+/* Define o tamanho da fonte base e a fonte padrão para a página */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Righteous', cursive;
+    font-size: 62.5%; /* Define o tamanho da fonte base para 10px */
+}
+
+.nav a {
+    font-family: 'Bebas Neue', cursive;
+}
+
+/* Navbar fixa no topo da página */
+.nav {
+    width: 100%;
+    height: 65px;
+    position: fixed;
+    line-height: 65px;
+    text-align: center;
+    background-color: #111; /* Cor de fundo da navbar */
+    padding: 0 5rem; /* Padding esquerdo e direito */
+    box-sizing: border-box; /* Garante que o padding e border sejam incluídos na largura total */
+    display: flex; /* Usa flexbox para alinhamento */
+    align-items: center; /* Alinha os itens verticalmente no centro */
+    justify-content: space-between; /* Distribui o espaço entre logo e itens do menu */
+}
+
+/* Logo na navbar */
+.nav div.logo {
+    float: left;
+    padding-left: 3rem;
+}
+
+.nav div.logo a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 2.5rem;
+}
+
+.nav div.logo a:hover {
+    color: #f83200; /* Cor de destaque ao passar o mouse */
+}
+
+/* Lista de itens da navbar */
+.nav div.main_list {
+    float: right;
+}
+
+.nav div.main_list ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav div.main_list ul li {
+    padding-right: 3rem;
+}
+
+.nav div.main_list ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 2.4rem;
+}
+
+.nav div.main_list ul li a:hover {
+    color: #f83200; /* Cor de destaque ao passar o mouse */
+}
+
+/* Botão na seção Home */
+.home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(65,0,0,1) 45%, rgba(177,0,0,1) 100%);
+    background-size: cover;
+}
+
+/* Botão na seção Home */
+.home .btn {
+    font-size: 2rem;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    background-color: #333; /* Cor de fundo escura */
+    color: #fff; /* Cor do texto */
+    border: 2px solid #000; /* Borda preta */
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif; /* Fonte para legibilidade */
+    text-shadow: 1px 1px 2px #000; /* Sombra preta na fonte para maior contraste */
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Sombra preta */
+}
+
+.home .btn:hover,
+.home .btn:focus {
+    background-color: #555; /* Cor de fundo mais clara quando hover */
+    color: #fff; /* Mantém a cor do texto */
+    border-color: #222; /* Cor da borda preta mais suave quando hover */
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7); /* Sombra mais intensa quando hover */
+    outline: none;
+}
+
+
+
+/* Botão de menu responsivo (hamburger) */
+.navTrigger {
+    display: none;
+    cursor: pointer;
+    width: 30px;
+    height: 25px;
+    margin: auto;
+    position: absolute;
+    right: 30px;
+    top: 0;
+    bottom: 0;
+}
+
+.navTrigger i {
+    background-color: #fff;
+    border-radius: 2px;
+    content: '';
+    display: block;
+    width: 100%;
+    height: 4px;
+}
+
+/* Animações para o botão hamburger */
+.navTrigger i:nth-child(1) {
+    animation: outT 0.8s backwards;
+}
+
+.navTrigger i:nth-child(2) {
+    margin: 5px 0;
+    animation: outM 0.8s backwards;
+}
+
+.navTrigger i:nth-child(3) {
+    animation: outBtm 0.8s backwards;
+}
+
+.navTrigger.active i:nth-child(1) {
+    animation: inT 0.8s forwards;
+}
+
+.navTrigger.active i:nth-child(2) {
+    animation: inM 0.8s forwards;
+}
+
+.navTrigger.active i:nth-child(3) {
+    animation: inBtm 0.8s forwards;
+}
+
+/* Keyframes para animações do botão hamburger */
+@keyframes inM {
+    50% { transform: rotate(0deg); }
+    100% { transform: rotate(45deg); }
+}
+
+@keyframes outM {
+    50% { transform: rotate(0deg); }
+    100% { transform: rotate(45deg); }
+}
+
+@keyframes inT {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(9px) rotate(0deg); }
+    100% { transform: translateY(9px) rotate(135deg); }
+}
+
+@keyframes outT {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(9px) rotate(0deg); }
+    100% { transform: translateY(9px) rotate(135deg); }
+}
+
+@keyframes inBtm {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-9px) rotate(0deg); }
+    100% { transform: translateY(-9px) rotate(135deg); }
+}
+
+@keyframes outBtm {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-9px) rotate(0deg); }
+    100% { transform: translateY(-9px) rotate(135deg); }
+}
+
+/* Seção de conteúdo com gradiente de fundo suave */
+.content {
+    height: 1000px; /* Define a altura da seção para efeito de rolagem */
+    background: linear-gradient(to bottom, #fff, #f8f8f8); /* Gradiente suave de branco para cinza claro */
+    padding: 5rem 2rem; /* Padding superior e inferior para a seção */
+}
+
+/* Estilo de texto na seção Home */
+.myH2 {
+    text-align: center;
+    font-size: 4rem;
+    font-family: 'Righteous', cursive; /* Fonte estilizada para o título */
+}
+
+.myP {
+    text-align: justify;
+    padding: 0 15%;
+    font-size: 2rem; /* Ajustado para corresponder ao tamanho base da fonte */
+    font-family: 'Righteous', cursive; /* Fonte estilizada para o parágrafo */
+}
+
+@media all and (max-width: 700px) {
+    .myP {
+        padding: 2%;
+    }
+}
+
+/* Estilo de navbar fixa quando rola a página */
+.affix {
+    background-color: #111;
+}
+/* Footer */
+.footer {
+    background-color: #111; /* Cor de fundo do footer */
+    color: #fff; /* Cor do texto do footer */
+    padding: 2rem 0; /* Padding superior e inferior */
+    text-align: center; /* Alinha o texto ao centro */
+}
+
+.footer .container {
+    width: 80%;
+    margin: 0 auto; /* Centraliza o container */
+}
+
+.footer-logo a {
+    text-decoration: none; /* Remove sublinhado do link */
+    color: #fff; /* Cor padrão do símbolo */
+    font-size: 2rem; /* Ajuste o tamanho do símbolo conforme necessário */
+    transition: color 0.3s ease; /* Suaviza a transição da cor */
+}
+
+.footer-logo a:hover {
+    color: #f83200; /* Cor vermelha ao passar o mouse */
+}
+
+.footer-text {
+    margin-bottom: 1rem; /* Espaçamento abaixo do texto */
+}
+
+.footer-text p {
+    font-size: 1.6rem; /* Tamanho da fonte do texto de direitos reservados */
+    margin: 0; /* Remove margin padrão */
+}
+
+.footer-text a.footer-link {
+    color: #fff; /* Cor do link igual ao texto */
+    text-decoration: none; /* Remove sublinhado do link */
+    transition: color 0.3s ease; /* Suaviza a transição da cor */
+}
+
+.footer-text a.footer-link:hover {
+    color: #b0b0b0; /* Cor cinza clara quando hover */
+}
+
+.footer-social {
+    margin-top: 1rem; /* Espaçamento acima do ícone */
+}
+
+.social-icon {
+    display: inline-block;
+    text-decoration: none; /* Remove sublinhado do link */
+    color: #fff; /* Cor do ícone */
+    font-size: 2rem; /* Ajuste o tamanho do ícone */
+    margin: 0 0.5rem; /* Espaçamento entre ícones */
+    transition: color 0.3s ease;
+}
+
+.social-icon:hover {
+    color: #1DA1F2; /* Cor azul do Twitter quando hover */
+}
+
+/* Adiciona margem e estiliza o carrossel */
+.carousel-item {
+    text-align: center;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+}
