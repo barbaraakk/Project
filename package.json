@@ -4,9 +4,15 @@
   "description": "A project to display tweets from a specific Twitter account using the Twitter API.",
   "main": "server/index.js",
   "scripts": {
-    "start": "node server/index.js"
+    "start": "node server/index.js",
+    "test": "echo \"No tests specified\" && exit 0",
+    "build": "echo \"No build step defined\" && exit 0"
   },
-  "keywords": ["twitter", "api", "express"],
+  "keywords": [
+    "twitter",
+    "api",
+    "express"
+  ],
   "author": "Barbaraakk",
   "license": "ISC",
   "dependencies": {
