@@ -49,23 +49,6 @@
         </p>
     </div>
 
-    <!-- Carrossel Interativo -->
-    <div class="carousel-container">
-        <div id="tweetCarousel" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner" id="tweetCarouselInner">
-                <!-- Tweets serão injetados aqui pelo JavaScript -->
-            </div>
-            <a class="carousel-control-prev" href="#tweetCarousel" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#tweetCarousel" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-    </div>
-
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -108,33 +91,5 @@
         });
     </script>
 
-    <!-- Script para Carrossel de Tweets -->
-    <script>
-        async function fetchTweets() {
-            try {
-                const response = await fetch('/api/tweets');
-                const data = await response.json();
-                const tweets = data.data; // Ajuste conforme a estrutura da resposta da API
-                
-                const carouselInner = document.getElementById('tweetCarouselInner');
-                carouselInner.innerHTML = ''; // Limpa conteúdo anterior
-
-                tweets.forEach((tweet, index) => {
-                    const activeClass = index === 0 ? 'active' : '';
-                    carouselInner.innerHTML += `
-                        <div class="carousel-item ${activeClass}">
-                            <div class="d-flex justify-content-center align-items-center" style="height: 200px;">
-                                <p>${tweet.text}</p>
-                            </div>
-                        </div>
-                    `;
-                });
-            } catch (error) {
-                console.error('Erro ao buscar tweets:', error);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', fetchTweets);
-    </script>
 </body>
 </html>
