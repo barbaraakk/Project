@@ -54,10 +54,10 @@ project/ <br>
 ### Executando com Docker
 
 1. Construa a imagem Docker:
-    docker build -t mandzatsu-website.
+    docker build -t project.
 
 2. Execute o contêiner:
-    docker run -p 3000:3000 mandzatsu-website
+    docker run -p 3000:3000 project
 
 O servidor estará disponível em http://localhost:3000.
 
