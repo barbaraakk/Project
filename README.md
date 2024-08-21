@@ -1,22 +1,22 @@
-# MandZatsu Website
+# Project
 
 ## Descrição
 
-O **MandZatsu Website** é um projeto web que exibe um site com páginas de política de privacidade e termos de serviço. Utiliza o framework **Express** para o backend e serve arquivos estáticos a partir da pasta `public`. O projeto está configurado para ser executado em um ambiente Docker e também pode ser iniciado localmente.
+O **Project** é um projeto web que exibe um site com páginas de política de privacidade e termos de serviço. Utiliza o framework **Express** para o backend e serve arquivos estáticos a partir da pasta `public`. O projeto está configurado para ser executado em um ambiente Docker e também pode ser iniciado localmente.
 
 ## Estrutura do Projeto
 
-project/
-├── dockerfile
-├── gitignore
-├── package.json
-├── public/
-│ ├── index.html
-│ ├── privacy-policy.html
-│ ├── terms.html
-│ └── style.css
-└── server/
-└── index.js
+project/ <br>
+├── dockerfile <br>
+├── gitignore<br>
+├── package.json<br>
+├── public/<br>
+│ ├── index.html<br>
+│ ├── privacy-policy.html<br>
+│ ├── terms.html<br>
+│ └── style.css<br>
+└── server/<br>
+└── index.js<br>
 
 - **`public/`**: Contém os arquivos estáticos do site, incluindo HTML, CSS e outros recursos.
   - **`index.html`**: Página inicial do site.
@@ -39,7 +39,7 @@ project/
 
 1. Clone o repositório:
    ```bash
-   git clone <URL_DO_REPOSITORIO>
+   git clone 
    cd project
 
 2. Instale as dependências:
@@ -51,7 +51,7 @@ project/
     O servidor estará disponível em http://localhost:3000.
 
 
-Executando com Docker
+### Executando com Docker
 
 1. Construa a imagem Docker:
     docker build -t mandzatsu-website.
@@ -62,7 +62,7 @@ Executando com Docker
 O servidor estará disponível em http://localhost:3000.
 
 
-Estrutura do Dockerfile
+### Estrutura do Dockerfile
     Imagem base: Utiliza a imagem oficial do Node.js node:14.
     Diretório de trabalho: Define o diretório /app.
     Dependências: Instala as dependências listadas no package.json.
