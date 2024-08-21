@@ -39,7 +39,7 @@ project/ <br>
 
 1. Clone o repositório:
    ```bash
-   git clone 
+   git clone https://github.com/barbaraakk/Project
    cd project
 
 2. Instale as dependências:
