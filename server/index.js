@@ -4,6 +4,8 @@ require('dotenv').config(); // Carregar variáveis de ambiente
 
 const app = express();
 const port = process.env.PORT || 3000;
+const path = require('path');
+
 
 // Carregar variáveis de ambiente
 const twitterBearerToken = process.env.TWITTER_BEARER_TOKEN;
@@ -33,7 +35,7 @@ app.get('/tweets', async (req, res) => {
 
 // Rota para servir a página inicial
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html'); // Ajuste o caminho conforme a estrutura do seu projeto
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Inicia o servidor
