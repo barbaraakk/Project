@@ -296,3 +296,42 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 50%;
 }
+
+
+/* Estilo para a página de Termos de Serviço */
+.terms-container {
+    background: linear-gradient(to bottom, #fff, #f8f8f8); /* Gradiente suave de branco para cinza claro */
+    padding: 5rem 2rem; /* Padding superior e inferior */
+    padding-top: calc(65px + 2rem); /* Adiciona espaçamento superior para a navbar */
+    min-height: 100vh; /* Garante que a página ocupe pelo menos a altura total da viewport */
+}
+
+.terms-container h1 {
+    font-size: 3rem;
+    text-align: center;
+    font-family: 'Righteous', cursive; /* Fonte estilizada para o título */
+    margin-bottom: 2rem;
+}
+
+.terms-container p {
+    font-size: 1.8rem; /* Ajuste o tamanho da fonte conforme necessário */
+    text-align: justify;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+/* Adaptações para dispositivos móveis */
+@media all and (max-width: 700px) {
+    .terms-container {
+        padding: 2rem;
+        padding-top: calc(65px + 1rem); /* Ajusta o espaçamento superior em dispositivos móveis */
+    }
+
+    .terms-container h1 {
+        font-size: 2.5rem;
+    }
+
+    .terms-container p {
+        font-size: 1.6rem;
+    }
+}
