@@ -1,6 +1,6 @@
 const express = require('express');
 const axios = require('axios');
-require('dotenv').config();
+require('dotenv').config(); // Carregar variáveis de ambiente
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -17,7 +17,7 @@ app.get('/tweets', async (req, res) => {
     const response = await axios.get('https://api.twitter.com/2/tweets/search/recent', {
       headers: {
         'Authorization': `Bearer ${twitterBearerToken}`, // Usando a variável carregada
-        'User-Agent': 'YourAppName'
+        'User-Agent': 'TweetFetcher/1.0' // Nome e versão da sua aplicação
       },
       params: {
         query: 'from:MandZatsu', // Ajuste conforme necessário
@@ -33,7 +33,7 @@ app.get('/tweets', async (req, res) => {
 
 // Rota para servir a página inicial
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/../public/index.html');
+  res.sendFile(__dirname + '/public/index.html'); // Ajuste o caminho conforme a estrutura do seu projeto
 });
 
 // Inicia o servidor
