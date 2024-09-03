@@ -81,6 +81,8 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
+    
+    text-align: center;
     height: 100vh;
     background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(65,0,0,1) 45%, rgba(177,0,0,1) 100%);
     background-size: cover;
@@ -297,7 +299,6 @@ body {
     border-radius: 50%;
 }
 
-
 /* Estilo para a página de Termos de Serviço */
 .terms-container {
     background: linear-gradient(to bottom, #fff, #f8f8f8); /* Gradiente suave de branco para cinza claro */
@@ -335,3 +336,199 @@ body {
         font-size: 1.6rem;
     }
 }
+#gameCanvas {
+    display: none; /* Inicialmente escondido */
+    position: absolute; /* Fica no mesmo lugar que o botão */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Ajusta a posição para realmente centralizar */
+    border: 1px solid #000; /* Borda opcional para visibilidade */
+    
+}
+#gameCanvas.visible {
+    display: block;
+}
+#startGame {
+    z-index: 1; /* Garante que o botão está acima do canvas */
+}
+
+.score-text, .lives-text {
+    position: absolute; /* Mantém o texto posicionado corretamente */
+    font-family: 'Arial', sans-serif; /* Fonte que combina com seu site */
+    font-size: 16px; /* Ajuste o tamanho da fonte conforme necessário */
+    color: #ffffff; /* Cor do texto */
+    font-weight: bold;
+    padding: 5px 10px; /* Espaçamento interno */
+    border-radius: 5px; /* Bordas arredondadas */
+    background-color: rgba(0, 0, 0, 0.6); /* Fundo escuro com transparência */
+    background-image: url('images/brush.png'); /* Caminho para a imagem de fundo */
+    background-size: cover; /* Faz com que a imagem cubra o elemento */
+    background-position: center; /* Centraliza a imagem no fundo */
+    background-repeat: no-repeat; /* Evita a repetição da imagem */
+    z-index: 2; /* Garante que o texto está acima do canvas */
+    /* Adiciona uma sombra ao texto para melhorar a legibilidade sobre a imagem */
+    text-shadow: 1px 1px 2px #000;
+}
+
+
+
+
+#score {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+#lives {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+
+
+
+/* Estilo para o botão de início */
+#startGame {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2; /* Garante que o botão está acima do canvas e da tela de introdução */
+}
+
+#introScreen {
+    display: none;
+    position: absolute; /* Permite a centralização usando top, left e transform */
+    top: 50%;
+    left: 50%;
+    pointer-events: none;
+    transition: opacity 0.5s ease-in-out;
+    transform: translate(-50%, -50%); /* Centraliza o container */
+    width: 900px; /* Largura fixa para a tela de introdução */
+    height: 550px; /* Altura fixa para a tela de introdução */
+    background: 
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), /* Camada preta com opacidade reduzida */
+        url('images/background.png') no-repeat center center;
+    background-size: cover;
+    overflow: hidden; /* Garante que nada saia do elemento */
+    justify-content: center;
+    align-items: center; /* Centraliza o conteúdo verticalmente */
+    z-index: 10; /* Garante que está acima do canvas */
+}
+
+
+#introWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+/* Estilo do conteúdo da tela de introdução */
+#introContent {
+    background: #3e4343; /* Cor de fundo mais escura que combina com o site */
+    color: #fff; /* Cor do texto */
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    width: 80%;
+    max-width: 600px;
+    font-family: 'Righteous', cursive; /* Fonte estilizada */
+    font-size: 1.5rem;
+}
+
+#introContent p {
+    margin: 10px 0;
+    font-size: 1.5rem;
+}
+
+#startGameButton {
+    transform: scale(0.95);
+    transition: transform 0.2s ease;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background: #f9171b; /* Cor de fundo vermelha que combina com o site */
+    color: #fff; /* Cor do texto */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Righteous', cursive; /* Fonte estilizada */
+}
+
+#startGameButton.clicked {
+    transform: scale(0.95); /* Diminui o botão quando clicado */
+}
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+/* Classe oculta a tela de introdução inicialmente */
+#introScreen.hidden {
+    opacity: 0;
+    pointer-events: none; /* Evita interação enquanto estiver oculto */
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Classe visível da tela de introdução */
+#introScreen.visible {
+    display: flex; /* Ou o valor que melhor se encaixa no seu design */
+    opacity: 1;
+    pointer-events: auto; /* Permite interação */
+}
+
+
+#startGameButton:hover {
+    background: #c52416; /* Cor vermelha mais escura quando hover */
+}
+/* Estilos gerais para dispositivos móveis */
+@media all and (max-width: 700px) {
+    .nav {
+        flex-direction: column;
+        height: auto; /* Permite que a altura se ajuste ao conteúdo */
+        padding: 0 2rem; /* Reduz o padding horizontal */
+    }
+
+    .nav div.logo {
+        float: none;
+        padding: 1rem 0; /* Adiciona padding vertical para o logo */
+    }
+
+    .nav div.main_list {
+        float: none;
+        width: 100%; /* Faz a lista ocupar a largura total */
+        display: none; /* Inicialmente oculta a lista */
+        flex-direction: column; /* Alinha os itens verticalmente */
+    }
+
+    .nav div.main_list.active {
+        display: flex; /* Exibe a lista quando a classe active está presente */
+    }
+
+    .nav div.main_list ul {
+        display: flex; /* Usa flexbox para a lista de itens */
+        flex-direction: column; /* Alinha os itens verticalmente */
+    }
+
+    .nav div.main_list ul li {
+        padding-right: 0;
+        padding: 1rem 0; /* Adiciona padding vertical aos itens da lista */
+        text-align: center; /* Centraliza o texto dos itens */
+    }
+
+    .navTrigger {
+        display: block; /* Mostra o botão */
+        cursor: pointer;
+        position: absolute; /* Ajusta a posição do botão */
+        right: 10px;
+        top: 15px;
+    }
+}
+
+
