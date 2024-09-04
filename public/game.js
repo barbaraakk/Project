@@ -4,36 +4,33 @@ document.addEventListener('DOMContentLoaded', function() {
     const introScreen = document.getElementById('introScreen');
     const startGameButton = document.getElementById('startGameButton');
 
-    // Inicializa o estado da página
-    introScreen.classList.add('hidden'); // Oculta a tela de introdução inicialmente
-    gameCanvas.style.display = 'none'; // Inicialmente oculta o canvas do jogo
-    startButton.style.display = 'block'; // Garante que o botão START esteja visível
+    introScreen.classList.add('hidden');
+    gameCanvas.style.display = 'none';
+    startButton.style.display = 'block';
 
-    // Adiciona um evento de clique ao botão START
     startButton.addEventListener('click', function() {
-        startButton.classList.add('clicked'); // Adiciona a classe de clique para animação
+        startButton.classList.add('clicked');
         setTimeout(() => {
-            startButton.style.display = 'none'; // Esconde o botão START
-            introScreen.classList.remove('hidden'); // Mostra a tela de introdução com transição
+            startButton.style.display = 'none';
+            introScreen.classList.remove('hidden');
             introScreen.classList.add('visible');
-        }, 300); // Tempo para animação do botão
+        }, 300);
     });
 
-    // Adiciona um evento de clique ao botão OK na tela de introdução
     startGameButton.addEventListener('click', function() {
-        introScreen.classList.remove('visible'); // Remove a classe de visibilidade com transição
+        introScreen.classList.remove('visible');
         introScreen.classList.add('hidden');
         setTimeout(() => {
-            introScreen.style.display = 'none'; // Esconde a tela de introdução
-            gameCanvas.style.display = 'block'; // Mostra o canvas do jogo
-            startGame(); // Inicia o jogo
-        }, 500); // Tempo suficiente para garantir que a tela de introdução esteja oculta
+            introScreen.style.display = 'none';
+            gameCanvas.style.display = 'block';
+            startGame();
+        }, 500);
     });
 
     function startGame() {
         const ctx = gameCanvas.getContext('2d');
         const backgroundImage = new Image();
-        backgroundImage.src = 'images/background.png'; // Substitua pelo caminho da sua imagem
+        backgroundImage.src = 'images/background.png';
 
         let img = new Image();
         img.src = 'images/brush.png';
@@ -47,11 +44,11 @@ document.addEventListener('DOMContentLoaded', function() {
         };
 
         let foods = [];
-        let hazards = []; // Bolinhas que tiram vida
+        let hazards = [];
         let foodSpeed = 2;
         let hazardSpeed = 3;
         let score = 0;
-        let lives = 3; // Número inicial de vidas
+        let lives = 3;
         let gameOver = false;
 
         let rightPressed = false;
@@ -60,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
         function drawBackground() {
             const canvasAspectRatio = gameCanvas.width / gameCanvas.height;
             const imageAspectRatio = backgroundImage.width / backgroundImage.height;
-            
+
             let drawWidth, drawHeight, offsetX, offsetY;
 
             if (canvasAspectRatio > imageAspectRatio) {
@@ -79,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function drawOverlay() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'; // Ajuste a opacidade para escurecer o fundo
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
             ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
         }
 
@@ -87,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let dx = obj1.x - obj2.x;
             let dy = obj1.y - obj2.y;
             let distance = Math.sqrt(dx * dx + dy * dy);
-        
+
             return distance < obj1.radius + obj2.radius;
         }
 
@@ -99,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
         function drawFood(food) {
             ctx.beginPath();
             ctx.arc(food.x, food.y, food.radius, 0, Math.PI * 2);
-            ctx.fillStyle = "#FF6347";
+            ctx.fillStyle = "#008000";
             ctx.fill();
             ctx.closePath();
         }
@@ -107,25 +104,25 @@ document.addEventListener('DOMContentLoaded', function() {
         function drawHazard(hazard) {
             ctx.beginPath();
             ctx.arc(hazard.x, hazard.y, hazard.radius, 0, Math.PI * 2);
-            ctx.fillStyle = "#FF0000"; // Cor das bolinhas que tiram vida
+            ctx.fillStyle = "#FF0000";
             ctx.fill();
             ctx.closePath();
         }
 
         function drawScore() {
-            ctx.drawImage(img, -1, -5, 200, 60); // Desenha a imagem como fundo
-            ctx.fillStyle = "#ffffff"; // Cor do texto
+            ctx.drawImage(img, -1, -5, 200, 60);
+            ctx.fillStyle = "#ffffff";
             ctx.font = "bold 20px 'Righteous', sans-serif";
             ctx.fillText("Pontuação: " + score, 30, 30);
         }
-        
+
         function drawLives() {
-            ctx.drawImage(img, gameCanvas.width - 165, -5, 160, 60); // Desenha a imagem como fundo
-            ctx.fillStyle = "#ffffff"; // Cor do texto
+            ctx.drawImage(img, gameCanvas.width - 165, -5, 160, 60);
+            ctx.fillStyle = "#ffffff";
             ctx.font = "bold 20px 'Righteous', sans-serif";
             ctx.fillText("Vidas: " + lives, gameCanvas.width - 130, 30);
         }
-        
+
         function moveBasket() {
             if (rightPressed && basket.x + basket.width < gameCanvas.width) {
                 basket.x += basket.dx;
@@ -133,11 +130,61 @@ document.addEventListener('DOMContentLoaded', function() {
                 basket.x -= basket.dx;
             }
         }
+        
+        let badFoods = []; // Array para armazenar alimentos negativos
+
+        function createBadFood() {
+        let badFood;
+        let isOverlapping;
+
+        do {
+            let x = Math.random() * (gameCanvas.width - 30) + 15;
+            badFood = {
+            x: x,
+            y: 0,
+            radius: 15,
+            color: "#FFFFF" // Cor para identificar o alimento negativo
+            };
+
+            isOverlapping = foods.some(existingFood => checkCollision(badFood, existingFood)) ||
+                        hazards.some(existingHazard => checkCollision(badFood, existingHazard));
+        } while (isOverlapping);
+
+        badFoods.push(badFood);
+        }
+
+        function updateBadFoods() {
+        badFoods.forEach((badFood, index) => {
+            badFood.y += foodSpeed;
+
+            if (badFood.y > gameCanvas.height) {
+            badFoods.splice(index, 1);
+            }
+
+            if (badFood.y + badFood.radius > basket.y &&
+                badFood.x > basket.x && badFood.x < basket.x + basket.width) {
+            badFoods.splice(index, 1);
+            lives--; // Diminui vida ao pegar alimento negativo
+            if (lives <= 0) {
+                gameOver = true;
+            }
+            }
+        });
+        }
+
+        function drawBadFood(badFood) {
+        ctx.beginPath();
+        ctx.arc(badFood.x, badFood.y, badFood.radius, 0, Math.PI * 2);
+        ctx.fillStyle = badFood.color;
+        ctx.fill();
+        ctx.closePath();
+        }
+
 
         function createFood() {
             let food;
             let isOverlapping;
-        
+
             do {
                 let x = Math.random() * (gameCanvas.width - 30) + 15;
                 food = {
@@ -145,18 +192,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     y: 0,
                     radius: 15
                 };
-        
+
                 isOverlapping = foods.some(existingFood => checkCollision(food, existingFood)) ||
-                                hazards.some(existingHazard => checkCollision(food, existingHazard));
+                    hazards.some(existingHazard => checkCollision(food, existingHazard));
             } while (isOverlapping);
-        
+
             foods.push(food);
         }
-        
+
         function createHazard() {
             let hazard;
             let isOverlapping;
-        
+
             do {
                 let x = Math.random() * (gameCanvas.width - 30) + 15;
                 hazard = {
@@ -164,26 +211,27 @@ document.addEventListener('DOMContentLoaded', function() {
                     y: 0,
                     radius: 15
                 };
-        
+
                 isOverlapping = hazards.some(existingHazard => checkCollision(hazard, existingHazard)) ||
-                                foods.some(existingFood => checkCollision(hazard, existingFood));
+                    foods.some(existingFood => checkCollision(hazard, existingFood));
             } while (isOverlapping);
-        
+
             hazards.push(hazard);
         }
-        
+
         function updateFood() {
             foods.forEach((food, index) => {
                 food.y += foodSpeed;
-                
+
                 if (food.y > gameCanvas.height) {
                     foods.splice(index, 1);
                 }
 
-                if (food.y + food.radius > basket.y && 
+                if (food.y + food.radius > basket.y &&
                     food.x > basket.x && food.x < basket.x + basket.width) {
                     foods.splice(index, 1);
                     score++;
+                    increaseDifficulty(); // Aumenta a dificuldade a cada 5 pontos
                 }
             });
         }
@@ -196,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     hazards.splice(index, 1);
                 }
 
-                if (hazard.y + hazard.radius > basket.y && 
+                if (hazard.y + hazard.radius > basket.y &&
                     hazard.x > basket.x && hazard.x < basket.x + basket.width) {
                     hazards.splice(index, 1);
                     lives--;
@@ -205,6 +253,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
             });
+        }
+
+        function increaseDifficulty() {
+            if (score % 5 === 0) {
+                foodSpeed += 1;
+                hazardSpeed += 1;
+
+                // Aumenta a frequência de alimentos e perigos
+                for (let i = 0; i < 2; i++) {
+                    createFood();
+                    createHazard();
+                }
+            }
         }
 
         function draw() {
@@ -221,9 +282,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
             ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
             drawBackground();
-            drawOverlay(); // Adiciona a sobreposição escura
+            drawOverlay();
             drawBasket();
-           
+
             foods.forEach(drawFood);
             hazards.forEach(drawHazard);
             drawScore();
@@ -242,8 +303,11 @@ document.addEventListener('DOMContentLoaded', function() {
             draw();
             update();
             if (!gameOver) {
-                if (Math.random() < 0.02) createFood();
-                if (Math.random() < 0.01) createHazard();
+                if (Math.random() < 0.02) createBadFood();
+                if (Math.random() < 0.05) createFood();
+                if (Math.random() < 0.03) createHazard();
+                badFoods.forEach(drawBadFood);
+                updateBadFoods();
                 requestAnimationFrame(gameLoop);
             }
         }
@@ -264,6 +328,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        gameLoop(); // Inicia o loop do jogo
+        gameLoop();
     }
 });
