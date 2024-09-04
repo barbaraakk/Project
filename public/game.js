@@ -17,6 +17,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 300);
     });
 
+    function triggerGameOver() {
+        gameOver = true;
+        draw(); // Desenha o estado atual do canvas, incluindo o Game Over
+    }
+    
+
+    
+
     startGameButton.addEventListener('click', function() {
         introScreen.classList.remove('visible');
         introScreen.classList.add('hidden');
@@ -50,6 +58,8 @@ document.addEventListener('DOMContentLoaded', function() {
         let score = 0;
         let lives = 3;
         let gameOver = false;
+        let gameOverImage = new Image();
+        gameOverImage.src = 'images/game-over-background.jpg'; // Substitua pelo caminho da sua imagem de game over
 
         let rightPressed = false;
         let leftPressed = false;
@@ -172,6 +182,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         }
 
+        function drawGameOver() {
+            ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height); // Limpa o canvas
+            ctx.drawImage(gameOverImage, 0, 0, gameCanvas.width, gameCanvas.height);
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 40px 'Righteous', sans-serif";
+            ctx.textAlign = "center";
+            ctx.fillText("Game Over", gameCanvas.width / 2, gameCanvas.height / 2 - 20);
+            ctx.font = "bold 20px 'Righteous', sans-serif";
+            ctx.fillText("Pontuação Final: " + score, gameCanvas.width / 2, gameCanvas.height / 2 + 20);
+            ctx.fillText("Clique para Reiniciar", gameCanvas.width / 2, gameCanvas.height / 2 + 60);
+        }
+        
+
         function drawBadFood(badFood) {
         ctx.beginPath();
         ctx.arc(badFood.x, badFood.y, badFood.radius, 0, Math.PI * 2);
@@ -255,8 +278,10 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
+        
+        
         function increaseDifficulty() {
-            if (score % 5 === 0) {
+            if (score % 10 === 0) {
                 foodSpeed += 1;
                 hazardSpeed += 1;
 
@@ -270,13 +295,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function draw() {
             if (gameOver) {
-                ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-                ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
-                ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
-                ctx.fillStyle = "#ffffff";
-                ctx.font = "50px 'Righteous', sans-serif";
-                ctx.textAlign = "center";
-                ctx.fillText("Game Over", gameCanvas.width / 2, gameCanvas.height / 2);
+                drawGameOver();
                 return;
             }
 
@@ -286,10 +305,13 @@ document.addEventListener('DOMContentLoaded', function() {
             drawBasket();
 
             foods.forEach(drawFood);
+            badFoods.forEach(drawBadFood);
             hazards.forEach(drawHazard);
             drawScore();
             drawLives();
         }
+
+        
 
         function update() {
             if (gameOver) return;

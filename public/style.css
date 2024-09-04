@@ -1,534 +1,722 @@
 /* Importa as fontes do Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700&family=Righteous&display=swap');
 
 /* Define o tamanho da fonte base e a fonte padrão para a página */
 html,
 body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Righteous', cursive;
-    font-size: 62.5%; /* Define o tamanho da fonte base para 10px */
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Righteous', cursive;
+	font-size: 62.5%;
+	/* Define o tamanho da fonte base para 10px */
 }
 
 /* Estilo para os links na navbar */
 .nav a {
-    font-family: 'Bebas Neue', cursive;
+	font-family: 'Bebas Neue', cursive;
 }
 
 /* Navbar fixa no topo da página */
 .nav {
-    width: 100%;
-    height: 65px;
-    position: fixed;
-    line-height: 65px;
-    text-align: center;
-    background-color: #111; /* Cor de fundo da navbar */
-    padding: 0 5rem; /* Padding esquerdo e direito */
-    box-sizing: border-box; /* Garante que o padding e border sejam incluídos na largura total */
-    display: flex; /* Usa flexbox para alinhamento */
-    align-items: center; /* Alinha os itens verticalmente no centro */
-    justify-content: space-between; /* Distribui o espaço entre logo e itens do menu */
+	z-index: 20;
+	width: 100%;
+	height: 65px;
+	position: fixed;
+	line-height: 65px;
+	background-color: #111;
+	/* Cor de fundo da navbar */
+	display: flex;
+	/* Usa flexbox para alinhamento */
 }
 
 /* Logo na navbar */
 .nav div.logo {
-    float: left;
-    padding-left: 3rem;
+	float: left;
+	padding-left: 3rem;
 }
 
 .nav div.logo a {
-    text-decoration: none;
-    color: #fff;
-    font-size: 2.5rem;
+	text-decoration: none;
+	color: #fff;
+	font-size: 2.5rem;
 }
 
 .nav div.logo a:hover {
-    color: #f83200; /* Cor de destaque ao passar o mouse */
+	color: #f83200;
+	/* Cor de destaque ao passar o mouse */
 }
 
 /* Lista de itens da navbar */
 .nav div.main_list {
-    float: right;
+	float: right;
 }
 
 .nav div.main_list ul {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+	display: flex;
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
 
 .nav div.main_list ul li {
-    padding-right: 3rem;
+	padding-right: 3rem;
 }
 
 .nav div.main_list ul li a {
-    text-decoration: none;
-    color: #fff;
-    font-size: 2.4rem;
+	text-decoration: none;
+	color: #fff;
+	font-size: 2.4rem;
 }
 
 .nav div.main_list ul li a:hover {
-    color: #f83200; /* Cor de destaque ao passar o mouse */
+	color: #f83200;
+	/* Cor de destaque ao passar o mouse */
 }
 
 /* Botão na seção Home */
 .home {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    
-    text-align: center;
-    height: 100vh;
-    background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(65,0,0,1) 45%, rgba(177,0,0,1) 100%);
-    background-size: cover;
+	height: 100vh;
+	background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(65, 0, 0, 1) 45%, rgba(177, 0, 0, 1) 100%);
 }
 
 /* Botão na seção Home */
 .home .btn {
-    font-size: 2rem;
-    padding: 1rem 2rem;
-    border-radius: 0.5rem;
-    background-color: #333; /* Cor de fundo escura */
-    color: #fff; /* Cor do texto */
-    border: 2px solid #000; /* Borda preta */
-    font-weight: 600;
-    font-family: 'Montserrat', sans-serif; /* Fonte para legibilidade */
-    text-shadow: 1px 1px 2px #000; /* Sombra preta na fonte para maior contraste */
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Sombra preta */
+	font-size: 2rem;
+	padding: 1rem 2rem;
+	border-radius: 0.5rem;
+	background-color: #333;
+	/* Cor de fundo escura */
+	color: #fff;
+	/* Cor do texto */
+	border: 2px solid #000;
+	/* Borda preta */
+	font-weight: 600;
+	font-family: 'Montserrat', sans-serif;
+	/* Fonte para legibilidade */
+	transition: background-color 0.3s ease;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+	/* Sombra preta */
 }
 
 .home .btn:hover,
 .home .btn:focus {
-    background-color: #555; /* Cor de fundo mais clara quando hover */
-    color: #fff; /* Mantém a cor do texto */
-    border-color: #222; /* Cor da borda preta mais suave quando hover */
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7); /* Sombra mais intensa quando hover */
-    outline: none;
+	background-color: #555;
+	/* Cor de fundo mais clara quando hover */
+	color: #fff;
+	/* Mantém a cor do texto */
+	transform: scale(1.05);
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
+	/* Sombra mais intensa quando hover */
+
 }
 
 /* Botão de menu responsivo (hamburger) */
 .navTrigger {
-    display: none;
-    cursor: pointer;
-    width: 30px;
-    height: 25px;
-    margin: auto;
-    position: absolute;
-    right: 30px;
-    top: 0;
-    bottom: 0;
+	display: none;
+	cursor: pointer;
+	width: 30px;
+	height: 25px;
+	position: absolute;
+	right: 30px;
+	top: 0;
+	bottom: 0;
 }
 
 .navTrigger i {
-    background-color: #fff;
-    border-radius: 2px;
-    content: '';
-    display: block;
-    width: 100%;
-    height: 4px;
+	background-color: #fff;
+	border-radius: 2px;
+	content: '';
+	display: block;
+	width: 100%;
+	height: 4px;
 }
 
 /* Animações para o botão hamburger */
 .navTrigger i:nth-child(1) {
-    animation: outT 0.8s backwards;
+	animation: outT 0.8s backwards;
 }
 
 .navTrigger i:nth-child(2) {
-    margin: 5px 0;
-    animation: outM 0.8s backwards;
+	margin: 5px 0;
+	animation: outM 0.8s backwards;
 }
 
 .navTrigger i:nth-child(3) {
-    animation: outBtm 0.8s backwards;
+	animation: outBtm 0.8s backwards;
 }
 
 .navTrigger.active i:nth-child(1) {
-    animation: inT 0.8s forwards;
+	animation: inT 0.8s forwards;
 }
 
 .navTrigger.active i:nth-child(2) {
-    animation: inM 0.8s forwards;
+	animation: inM 0.8s forwards;
 }
 
 .navTrigger.active i:nth-child(3) {
-    animation: inBtm 0.8s forwards;
+	animation: inBtm 0.8s forwards;
 }
 
 /* Keyframes para animações do botão hamburger */
 @keyframes inM {
-    50% { transform: rotate(0deg); }
-    100% { transform: rotate(45deg); }
+	50% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(45deg);
+	}
 }
 
 @keyframes outM {
-    50% { transform: rotate(0deg); }
-    100% { transform: rotate(45deg); }
+	50% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(45deg);
+	}
 }
 
 @keyframes inT {
-    0% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(9px) rotate(0deg); }
-    100% { transform: translateY(9px) rotate(135deg); }
+	0% {
+		transform: translateY(0px) rotate(0deg);
+	}
+
+	50% {
+		transform: translateY(9px) rotate(0deg);
+	}
+
+	100% {
+		transform: translateY(9px) rotate(135deg);
+	}
 }
 
 @keyframes outT {
-    0% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(9px) rotate(0deg); }
-    100% { transform: translateY(9px) rotate(135deg); }
+	0% {
+		transform: translateY(0px) rotate(0deg);
+	}
+
+	50% {
+		transform: translateY(9px) rotate(0deg);
+	}
+
+	100% {
+		transform: translateY(9px) rotate(135deg);
+	}
 }
 
 @keyframes inBtm {
-    0% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-9px) rotate(0deg); }
-    100% { transform: translateY(-9px) rotate(135deg); }
+	0% {
+		transform: translateY(0px) rotate(0deg);
+	}
+
+	50% {
+		transform: translateY(-9px) rotate(0deg);
+	}
+
+	100% {
+		transform: translateY(-9px) rotate(135deg);
+	}
 }
 
 @keyframes outBtm {
-    0% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-9px) rotate(0deg); }
-    100% { transform: translateY(-9px) rotate(135deg); }
+	0% {
+		transform: translateY(0px) rotate(0deg);
+	}
+
+	50% {
+		transform: translateY(-9px) rotate(0deg);
+	}
+
+	100% {
+		transform: translateY(-9px) rotate(135deg);
+	}
 }
 
 /* Seção de conteúdo com gradiente de fundo suave */
 .content {
-    height: 1000px; /* Define a altura da seção para efeito de rolagem */
-    background: linear-gradient(to bottom, #fff, #f8f8f8); /* Gradiente suave de branco para cinza claro */
-    padding: 5rem 2rem; /* Padding superior e inferior para a seção */
+	height: 1000px;
+	/* Define a altura da seção para efeito de rolagem */
+	background: linear-gradient(to bottom, #fff, #f8f8f8);
+	/* Gradiente suave de branco para cinza claro */
+	padding: 5rem 2rem;
+	/* Padding superior e inferior para a seção */
 }
 
 /* Estilo de texto na seção Home */
 .myH2 {
-    text-align: center;
-    font-size: 4rem;
-    font-family: 'Righteous', cursive; /* Fonte estilizada para o título */
+	text-align: center;
+	font-size: 4rem;
+	font-family: 'Righteous', cursive;
+	/* Fonte estilizada para o título */
 }
 
 .myP {
-    text-align: justify;
-    padding: 0 15%;
-    font-size: 2rem; /* Ajustado para corresponder ao tamanho base da fonte */
-    font-family: 'Righteous', cursive; /* Fonte estilizada para o parágrafo */
+	text-align: justify;
+	padding: 0 15%;
+	font-size: 2rem;
+	/* Ajustado para corresponder ao tamanho base da fonte */
+	font-family: 'Righteous', cursive;
+	/* Fonte estilizada para o parágrafo */
 }
 
 @media all and (max-width: 700px) {
-    .myP {
-        padding: 2%;
-    }
+	.myP {
+		padding: 2%;
+	}
 }
 
 /* Estilo de navbar fixa quando rola a página */
 .affix {
-    background-color: #111;
+	background-color: #111;
 }
 
 /* Footer */
 .footer {
-    background-color: #111; /* Cor de fundo do footer */
-    color: #fff; /* Cor do texto do footer */
-    padding: 2rem 0; /* Padding superior e inferior */
-    text-align: center; /* Alinha o texto ao centro */
+	background-color: #111;
+	/* Cor de fundo do footer */
+	color: #fff;
+	/* Cor do texto do footer */
+	padding: 2rem 0;
+	/* Padding superior e inferior */
+	text-align: center;
+	/* Alinha o texto ao centro */
 }
 
 .footer .container {
-    width: 80%;
-    margin: 0 auto; /* Centraliza o container */
+	width: 80%;
+	margin: 0 auto;
+	/* Centraliza o container */
 }
 
 .footer-logo a {
-    text-decoration: none; /* Remove sublinhado do link */
-    color: #fff; /* Cor padrão do símbolo */
-    font-size: 2rem; /* Ajuste o tamanho do símbolo conforme necessário */
-    transition: color 0.3s ease; /* Suaviza a transição da cor */
+	text-decoration: none;
+	/* Remove sublinhado do link */
+	color: #fff;
+	/* Cor padrão do símbolo */
+	font-size: 2rem;
+	/* Ajuste o tamanho do símbolo conforme necessário */
+	transition: color 0.3s ease;
+	/* Suaviza a transição da cor */
 }
 
 .footer-logo a:hover {
-    color: #f83200; /* Cor vermelha ao passar o mouse */
+	color: #f83200;
+	/* Cor vermelha ao passar o mouse */
 }
 
 .footer-text {
-    margin-bottom: 1rem; /* Espaçamento abaixo do texto */
+	margin-bottom: 1rem;
+	/* Espaçamento abaixo do texto */
 }
 
 .footer-text p {
-    font-size: 1.6rem; /* Tamanho da fonte do texto de direitos reservados */
-    margin: 0; /* Remove margin padrão */
+	font-size: 1.6rem;
+	/* Tamanho da fonte do texto de direitos reservados */
+	margin: 0;
+	/* Remove margin padrão */
 }
 
 .footer-text a.footer-link {
-    color: #fff; /* Cor do link igual ao texto */
-    text-decoration: none; /* Remove sublinhado do link */
-    transition: color 0.3s ease; /* Suaviza a transição da cor */
+	color: #fff;
+	/* Cor do link igual ao texto */
+	text-decoration: none;
+	/* Remove sublinhado do link */
+	transition: color 0.3s ease;
+	/* Suaviza a transição da cor */
 }
 
 .footer-text a.footer-link:hover {
-    color: #b0b0b0; /* Cor cinza clara quando hover */
+	color: #b0b0b0;
+	/* Cor cinza clara quando hover */
 }
 
 .footer-social {
-    margin-top: 1rem; /* Espaçamento acima do ícone */
+	margin-top: 1rem;
+	/* Espaçamento acima do ícone */
 }
 
 .social-icon {
-    display: inline-block;
-    text-decoration: none; /* Remove sublinhado do link */
-    color: #fff; /* Cor do ícone */
-    font-size: 2rem; /* Ajuste o tamanho do ícone */
-    margin: 0 0.5rem; /* Espaçamento entre ícones */
-    transition: color 0.3s ease;
+	display: inline-block;
+	text-decoration: none;
+	/* Remove sublinhado do link */
+	color: #fff;
+	/* Cor do ícone */
+	font-size: 2rem;
+	/* Ajuste o tamanho do ícone */
+	margin: 0 0.5rem;
+	/* Espaçamento entre ícones */
+	transition: color 0.3s ease;
 }
 
-.social-icon:hover {
-    color: #1DA1F2; /* Cor azul do Twitter quando hover */
-}
-
-/* Adiciona margem e estiliza o carrossel */
-.carousel-item {
-    text-align: center;
-}
-
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
-}
 
 /* Estilo para a página de Termos de Serviço */
 .terms-container {
-    background: linear-gradient(to bottom, #fff, #f8f8f8); /* Gradiente suave de branco para cinza claro */
-    padding: 5rem 2rem; /* Padding superior e inferior */
-    padding-top: calc(65px + 2rem); /* Adiciona espaçamento superior para a navbar */
-    min-height: 100vh; /* Garante que a página ocupe pelo menos a altura total da viewport */
+	background: linear-gradient(to bottom, #fff, #f8f8f8);
+	/* Gradiente suave de branco para cinza claro */
+	padding: 5rem 2rem;
+	/* Padding superior e inferior */
+	padding-top: calc(65px + 2rem);
+	/* Adiciona espaçamento superior para a navbar */
+	min-height: 100vh;
+	/* Garante que a página ocupe pelo menos a altura total da viewport */
 }
 
 .terms-container h1 {
-    font-size: 3rem;
-    text-align: center;
-    font-family: 'Righteous', cursive; /* Fonte estilizada para o título */
-    margin-bottom: 2rem;
+	font-size: 3rem;
+	text-align: center;
+	font-family: 'Righteous', cursive;
+	/* Fonte estilizada para o título */
+	margin-bottom: 2rem;
 }
 
 .terms-container p {
-    font-size: 1.8rem; /* Ajuste o tamanho da fonte conforme necessário */
-    text-align: justify;
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
+	font-size: 1.8rem;
+	/* Ajuste o tamanho da fonte conforme necessário */
+	text-align: justify;
+	margin-bottom: 1.5rem;
+	line-height: 1.6;
 }
 
 /* Adaptações para dispositivos móveis */
 @media all and (max-width: 700px) {
-    .terms-container {
-        padding: 2rem;
-        padding-top: calc(65px + 1rem); /* Ajusta o espaçamento superior em dispositivos móveis */
-    }
+	.terms-container {
+		padding: 2rem;
+		padding-top: calc(65px + 1rem);
+		/* Ajusta o espaçamento superior em dispositivos móveis */
+	}
 
-    .terms-container h1 {
-        font-size: 2.5rem;
-    }
+	.terms-container h1 {
+		font-size: 2.5rem;
+	}
 
-    .terms-container p {
-        font-size: 1.6rem;
-    }
+	.terms-container p {
+		font-size: 1.6rem;
+	}
 }
+
 #gameCanvas {
-    display: none; /* Inicialmente escondido */
-    position: absolute; /* Fica no mesmo lugar que o botão */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Ajusta a posição para realmente centralizar */
-    border: 1px solid #000; /* Borda opcional para visibilidade */
-    
+	display: none;
+	/* Inicialmente escondido */
+	position: absolute;
+	/* Fica no mesmo lugar que o botão */
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	/* Ajusta a posição para realmente centralizar */
+	border: 1px solid #000000;
+	/* Borda opcional para visibilidade */
 }
+
 #gameCanvas.visible {
-    display: block;
+	display: block;
 }
+
 #startGame {
-    z-index: 1; /* Garante que o botão está acima do canvas */
+	position: relative;
+	z-index: 1;
+	/* Garante que o botão está acima do canvas */
 }
 
-.score-text, .lives-text {
-    position: absolute; /* Mantém o texto posicionado corretamente */
-    font-family: 'Arial', sans-serif; /* Fonte que combina com seu site */
-    font-size: 16px; /* Ajuste o tamanho da fonte conforme necessário */
-    color: #ffffff; /* Cor do texto */
-    font-weight: bold;
-    padding: 5px 10px; /* Espaçamento interno */
-    border-radius: 5px; /* Bordas arredondadas */
-    background-color: rgba(0, 0, 0, 0.6); /* Fundo escuro com transparência */
-    background-image: url('images/brush.png'); /* Caminho para a imagem de fundo */
-    background-size: cover; /* Faz com que a imagem cubra o elemento */
-    background-position: center; /* Centraliza a imagem no fundo */
-    background-repeat: no-repeat; /* Evita a repetição da imagem */
-    z-index: 2; /* Garante que o texto está acima do canvas */
-    /* Adiciona uma sombra ao texto para melhorar a legibilidade sobre a imagem */
-    text-shadow: 1px 1px 2px #000;
+.score-text,
+.lives-text {
+	position: absolute;
+	/* Mantém o texto posicionado corretamente */
+	font-size: 16px;
+	/* Ajuste o tamanho da fonte conforme necessário */
+	color: #ffffff;
+	/* Cor do texto */
+	font-weight: bold;
+	padding: 5px 10px;
+	/* Espaçamento interno */
+	border-radius: 5px;
+	/* Bordas arredondadas */
+	background-color: rgba(0, 0, 0, 0.6);
+	/* Fundo escuro com transparência */
+	background-image: url('images/brush.png');
+	/* Caminho para a imagem de fundo */
+	background-size: cover;
+	/* Faz com que a imagem cubra o elemento */
+	background-position: center;
+	/* Centraliza a imagem no fundo */
+	background-repeat: no-repeat;
+	/* Evita a repetição da imagem */
+	z-index: 2;
+	/* Garante que o texto está acima do canvas */
+	/* Adiciona uma sombra ao texto para melhorar a legibilidade sobre a imagem */
+	text-shadow: 1px 1px 2px #000;
 }
-
-
 
 
 #score {
-    position: absolute;
-    top: 10px;
-    left: 10px;
+	position: absolute;
+	top: 10px;
+	left: 10px;
 }
 
 #lives {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+	position: absolute;
+	top: 10px;
+	right: 10px;
 }
-
-
 
 
 /* Estilo para o botão de início */
 #startGame {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2; /* Garante que o botão está acima do canvas e da tela de introdução */
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 2;
+	/* Garante que o botão está acima do canvas e da tela de introdução */
 }
 
 #introScreen {
-    display: none;
-    position: absolute; /* Permite a centralização usando top, left e transform */
-    top: 50%;
-    left: 50%;
-    pointer-events: none;
-    transition: opacity 0.5s ease-in-out;
-    transform: translate(-50%, -50%); /* Centraliza o container */
-    width: 900px; /* Largura fixa para a tela de introdução */
-    height: 550px; /* Altura fixa para a tela de introdução */
-    background: 
-        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), /* Camada preta com opacidade reduzida */
-        url('images/background.png') no-repeat center center;
-    background-size: cover;
-    overflow: hidden; /* Garante que nada saia do elemento */
-    justify-content: center;
-    align-items: center; /* Centraliza o conteúdo verticalmente */
-    z-index: 10; /* Garante que está acima do canvas */
+	display: flex;
+	position: absolute;
+	/* Permite a centralização usando top, left e transform */
+	top: 50%;
+	left: 50%;
+	pointer-events: none;
+	transition: opacity 0.5s ease-in-out;
+	transform: translate(-50%, -50%);
+	/* Centraliza o container */
+	width: 900px;
+	/* Largura fixa para a tela de introdução */
+	height: 550px;
+	/* Altura fixa para a tela de introdução */
+	background:
+		linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+		/* Camada preta com opacidade reduzida */
+		url('images/background.png') no-repeat center center;
+	background-size: cover;
+	overflow: hidden;
+	/* Garante que nada saia do elemento */
+	justify-content: center;
+	align-items: center;
+	/* Centraliza o conteúdo verticalmente */
+	z-index: 10;
+	/* Garante que está acima do canvas */
 }
 
 
 #introWrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
 }
 
 /* Estilo do conteúdo da tela de introdução */
 #introContent {
-    background: #3e4343; /* Cor de fundo mais escura que combina com o site */
-    color: #fff; /* Cor do texto */
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    width: 80%;
-    max-width: 600px;
-    font-family: 'Righteous', cursive; /* Fonte estilizada */
-    font-size: 1.5rem;
+	background: #3e4343;
+	/* Cor de fundo mais escura que combina com o site */
+	color: #fff;
+	/* Cor do texto */
+	border-radius: 10px;
+	padding: 20px;
+	text-align: center;
+	width: 80%;
+	max-width: 600px;
+	font-family: 'Righteous', cursive;
+	/* Fonte estilizada */
+	font-size: 1.5rem;
 }
 
 #introContent p {
-    margin: 10px 0;
-    font-size: 1.5rem;
+	margin: 10px 0;
+	font-size: 1.5rem;
 }
+
+@media (max-width: 600px) {
+	#introContent {
+		width: 90%;
+		padding: 15px;
+		font-size: 1.2rem;
+	}
+
+	#introContent p {
+		font-size: 1.2rem;
+		/* Ajusta o tamanho da fonte dos parágrafos para melhor responsividade */
+		margin: 8px 0;
+		/* Ajusta a margem para dispositivos menores */
+	}
+}
+
 
 #startGameButton {
-    transform: scale(0.95);
-    transition: transform 0.2s ease;
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    background: #f9171b; /* Cor de fundo vermelha que combina com o site */
-    color: #fff; /* Cor do texto */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: 'Righteous', cursive; /* Fonte estilizada */
+	transform: scale(0.95);
+	transition: transform 0.2s ease;
+	margin-top: 20px;
+	padding: 10px 20px;
+	font-size: 16px;
+	background: #f9171b;
+	/* Cor de fundo vermelha que combina com o site */
+	color: #fff;
+	/* Cor do texto */
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-family: 'Righteous', cursive;
+	/* Fonte estilizada */
 }
 
+/* Ajuste para dispositivos móveis */
+@media (max-width: 600px) {
+	#startGameButton {
+		padding: 8px 16px;
+		font-size: 14px;
+		margin-top: 15px;
+	}
+}
+
+
 #startGameButton.clicked {
-    transform: scale(0.95); /* Diminui o botão quando clicado */
+	transform: scale(0.95);
+	/* Diminui o botão quando clicado */
 }
 
 .hidden {
-    display: none;
+	display: none;
 }
 
 .visible {
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out;
+
+	opacity: 1;
+	transition: opacity 0.5s ease-in-out;
 }
+
 /* Classe oculta a tela de introdução inicialmente */
 #introScreen.hidden {
-    opacity: 0;
-    pointer-events: none; /* Evita interação enquanto estiver oculto */
-    transition: opacity 0.5s ease-in-out;
+	display: none;
+	opacity: 0;
+	pointer-events: none;
+	/* Evita interação enquanto estiver oculto */
+	transition: opacity 0.5s ease-in-out;
 }
 
 /* Classe visível da tela de introdução */
 #introScreen.visible {
-    display: flex; /* Ou o valor que melhor se encaixa no seu design */
-    opacity: 1;
-    pointer-events: auto; /* Permite interação */
+	display: flex;
+	/* Ou o valor que melhor se encaixa no seu design */
+	opacity: 1;
+	pointer-events: auto;
+	/* Permite interação */
+	transition: opacity 0.5s ease-in-out;
 }
 
 
 #startGameButton:hover {
-    background: #c52416; /* Cor vermelha mais escura quando hover */
+	background: #c52416;
+	/* Cor vermelha mais escura quando hover */
 }
+
 /* Estilos gerais para dispositivos móveis */
-@media all and (max-width: 700px) {
-    .nav {
-        flex-direction: column;
-        height: auto; /* Permite que a altura se ajuste ao conteúdo */
-        padding: 0 2rem; /* Reduz o padding horizontal */
-    }
+@media all and (max-width: 786px) {
+	.nav {
+		flex-direction: column;
+		flex-wrap: wrap;
+		height: auto;
+		/* Permite que a altura se ajuste ao conteúdo */
+		padding: 0 2rem;
+		/* Reduz o padding horizontal */
+	}
 
-    .nav div.logo {
-        float: none;
-        padding: 1rem 0; /* Adiciona padding vertical para o logo */
-    }
 
-    .nav div.main_list {
-        float: none;
-        width: 100%; /* Faz a lista ocupar a largura total */
-        display: none; /* Inicialmente oculta a lista */
-        flex-direction: column; /* Alinha os itens verticalmente */
-    }
+	.nav div.logo {
+		float: none;
+		padding: 1rem 0;
+		/* Adiciona padding vertical para o logo */
+	}
 
-    .nav div.main_list.active {
-        display: flex; /* Exibe a lista quando a classe active está presente */
-    }
+	.nav div.main_list {
+		float: none;
+		width: 100%;
+		/* Faz a lista ocupar a largura total */
+		display: none;
+		/* Inicialmente oculta a lista */
+		flex-direction: column;
+		/* Alinha os itens verticalmente */
+	}
 
-    .nav div.main_list ul {
-        display: flex; /* Usa flexbox para a lista de itens */
-        flex-direction: column; /* Alinha os itens verticalmente */
-    }
+	.nav div.main_list.active {
+		display: flex;
+		/* Exibe a lista quando a classe active está presente */
+	}
 
-    .nav div.main_list ul li {
-        padding-right: 0;
-        padding: 1rem 0; /* Adiciona padding vertical aos itens da lista */
-        text-align: center; /* Centraliza o texto dos itens */
-    }
+	.nav div.main_list ul {
+		display: flex;
+		/* Usa flexbox para a lista de itens */
+		flex-direction: column;
+		/* Alinha os itens verticalmente */
+	}
 
-    .navTrigger {
-        display: block; /* Mostra o botão */
-        cursor: pointer;
-        position: absolute; /* Ajusta a posição do botão */
-        right: 10px;
-        top: 15px;
-    }
+	.nav div.main_list ul li {
+		padding-right: 0;
+		padding: 1rem 0;
+		/* Adiciona padding vertical aos itens da lista */
+		text-align: center;
+		/* Centraliza o texto dos itens */
+	}
+
+	.navTrigger {
+		display: block;
+		/* Mostra o botão */
+		cursor: pointer;
+		position: absolute;
+		/* Ajusta a posição do botão */
+		right: 10px;
+		top: 15px;
+	}
 }
 
+#gameOverScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
 
+.visualNovelBackground {
+    position: relative;
+    background-image: url('images/visual-novel-background.jpg'); /* Substitua pelo caminho da sua imagem */
+    background-size: cover;
+    background-position: center;
+    width: 80%;
+    height: 60%;
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.visualNovelText {
+    color: #ffffff;
+    font-family: 'Righteous', sans-serif;
+    text-align: center;
+}
+
+.visualNovelText p {
+    font-size: 30px;
+    margin: 0;
+}
+
+#restartButton {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 20px;
+    background-color: #f53b2c;
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    cursor: pointer;
+}
