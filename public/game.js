@@ -30,20 +30,35 @@ document.addEventListener('DOMContentLoaded', function() {
     function iniciarJogo() {
         const ctx = canvasJogo.getContext('2d');
 
-        const imagemFundo = new Image();
-        imagemFundo.src = 'images/background.png';
-        const imagemCesta = new Image();
-        imagemCesta.src = 'images/pou.png'; // Imagem da cesta
-        const imagemGameOver = new Image();
-        imagemGameOver.src = 'images/game-over-background.jpg';
-        const imagemComida = new Image(); // Imagem da comida
-        imagemComida.src = 'images/food.png'; // Substitua com o caminho correto para a sua imagem de comida
-        const imagemComidaRuim = new Image();
-        imagemComidaRuim.src = 'images/bad-food.png';
-        const imagemFundoPontuacao = new Image(); // Imagem do fundo dos pontos
-        imagemFundoPontuacao.src = 'images/brush.png'; // Substitua com o caminho correto para a sua imagem de fundo dos pontos
+        const imagens = {
+            fundo: new Image(),
+            cesta: new Image(),
+            gameOver: new Image(),
+            comida: new Image(),
+            comidaRuim: new Image(),
+            fundoPontuacao: new Image()
+        };
 
-        const cesta = {
+        imagens.fundo.src = 'images/background.png';
+        imagens.cesta.src = 'images/pou.png';
+        imagens.gameOver.src = 'images/game-over-background.jpg';
+        imagens.comida.src = 'images/food.png';
+        imagens.comidaRuim.src = 'images/bad-food.png';
+        imagens.fundoPontuacao.src = 'images/brush.png';
+
+        let todasImagensCarregadas = 0;
+        const totalImagens = Object.keys(imagens).length;
+
+        for (const key in imagens) {
+            imagens[key].onload = () => {
+                todasImagensCarregadas++;
+                if (todasImagensCarregadas === totalImagens) {
+                    iniciarLoopJogo();
+                }
+            };
+        }
+
+        let cesta = {
             x: canvasJogo.width / 2 - 35,
             y: canvasJogo.height - 50,
             width: 70,
@@ -62,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function desenharFundo() {
             const proporcaoCanvas = canvasJogo.width / canvasJogo.height;
-            const proporcaoImagem = imagemFundo.width / imagemFundo.height;
+            const proporcaoImagem = imagens.fundo.width / imagens.fundo.height;
 
             let larguraDesenho, alturaDesenho, deslocamentoX, deslocamentoY;
 
@@ -78,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 deslocamentoY = 0;
             }
 
-            ctx.drawImage(imagemFundo, deslocamentoX, deslocamentoY, larguraDesenho, alturaDesenho);
+            ctx.drawImage(imagens.fundo, deslocamentoX, deslocamentoY, larguraDesenho, alturaDesenho);
         }
 
         function desenharSobreposicao() {
@@ -87,37 +102,41 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function desenharCesta() {
-            ctx.drawImage(imagemCesta, cesta.x, cesta.y, cesta.width, cesta.height);
+            ctx.drawImage(imagens.cesta, cesta.x, cesta.y, cesta.width, cesta.height);
         }
 
         function desenharComida(comida) {
-            ctx.drawImage(imagemComida, comida.x - comida.radius, comida.y - comida.radius, comida.radius * 2, comida.radius * 2);
+            ctx.drawImage(imagens.comida, comida.x - comida.radius, comida.y - comida.radius, comida.radius * 2, comida.radius * 2);
         }
 
         function desenharPontuacao() {
-            ctx.drawImage(imagemFundoPontuacao, -1, -5, 200, 60); // Usando a imagem do fundo dos pontos
+            ctx.drawImage(imagens.fundoPontuacao, -1, -5, 200, 60);
             ctx.fillStyle = "#ffffff";
             ctx.font = "bold 20px 'Righteous', sans-serif";
             ctx.fillText("Pontuação: " + pontuacao, 30, 30);
         }
 
         function desenharVidas() {
-            ctx.drawImage(imagemFundoPontuacao, canvasJogo.width - 165, -5, 160, 60); // Usando a imagem do fundo dos pontos
+            ctx.drawImage(imagens.fundoPontuacao, canvasJogo.width - 165, -5, 160, 60);
             ctx.fillStyle = "#ffffff";
             ctx.font = "bold 20px 'Righteous', sans-serif";
             ctx.fillText("Vidas: " + vidas, canvasJogo.width - 130, 30);
         }
 
         function desenharGameOver() {
-            ctx.clearRect(0, 0, canvasJogo.width, canvasJogo.height);
-            ctx.drawImage(imagemGameOver, 0, 0, canvasJogo.width, canvasJogo.height);
-            ctx.fillStyle = "#ffffff";
-            ctx.font = "bold 40px 'Righteous', sans-serif";
-            ctx.textAlign = "center";
-            ctx.fillText("Game Over", canvasJogo.width / 2, canvasJogo.height / 2 - 20);
-            ctx.font = "bold 20px 'Righteous', sans-serif";
-            ctx.fillText("Pontuação Final: " + pontuacao, canvasJogo.width / 2, canvasJogo.height / 2 + 20);
-            ctx.fillText("Clique para Reiniciar", canvasJogo.width / 2, canvasJogo.height / 2 + 60);
+            if (imagens.gameOver.complete) { // Verifica se a imagem foi carregada
+                ctx.clearRect(0, 0, canvasJogo.width, canvasJogo.height);
+                ctx.drawImage(imagens.gameOver, 0, 0, canvasJogo.width, canvasJogo.height);
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "bold 40px 'Righteous', sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText("Game Over", canvasJogo.width / 2, canvasJogo.height / 2 - 20);
+                ctx.font = "bold 20px 'Righteous', sans-serif";
+                ctx.fillText("Pontuação Final: " + pontuacao, canvasJogo.width / 2, canvasJogo.height / 2 + 20);
+                ctx.fillText("Clique para Reiniciar", canvasJogo.width / 2, canvasJogo.height / 2 + 60);
+            } else {
+                console.log('Imagem de Game Over ainda não carregada.');
+            }
         }
 
         function desenharComidaRuim(comidaRuim) {
@@ -133,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 comida = {
                     x: x,
                     y: 0,
-                    radius: 30 // Ajuste o raio para se adequar ao tamanho da imagem
+                    radius: 30
                 };
                 sobreposicao = comidas.some(comidaExistente => checarColisao(comida, comidaExistente));
             } while (sobreposicao);
@@ -151,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     x: x,
                     y: 0,
                     radius: 30,
-                    image: imagemComidaRuim
+                    image: imagens.comidaRuim
                 };
                 sobreposicao = comidasRuins.some(comidaRuimExistente => checarColisao(comidaRuim, comidaRuimExistente));
             } while (sobreposicao);
@@ -186,6 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     vidas--;
                     if (vidas <= 0) {
                         jogoAcabou = true;
+                        console.log("Jogo acabou, vidas esgotadas.");
                     }
                 }
             });
@@ -249,8 +269,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!jogoAcabou) {
                 if (Math.random() < 0.02) criarComidaRuim();
                 if (Math.random() < 0.03) criarComida();
-                atualizarComidasRuins();
                 requestAnimationFrame(loopJogo);
+                atualizarComidasRuins()
+            } else {
+                console.log('O jogo acabou.');
+                desenharGameOver(); // Garantir que desenharGameOver seja chamado após o fim do jogo
             }
         }
 
@@ -282,6 +305,8 @@ document.addEventListener('DOMContentLoaded', function() {
         document.addEventListener("keyup", teclaLiberada);
         canvasJogo.addEventListener("click", cliqueNoCanvas);
 
-        loopJogo();
+        function iniciarLoopJogo() {
+            loopJogo();
+        }
     }
 });
