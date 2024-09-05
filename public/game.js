@@ -106,7 +106,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function desenharComida(comida) {
-            ctx.drawImage(imagens.comida, comida.x - comida.radius, comida.y - comida.radius, comida.radius * 2, comida.radius * 2);
+            ctx.save(); // Salva o estado atual do canvas
+            ctx.translate(comida.x, comida.y); // Move o ponto de origem para o centro da comida
+            ctx.rotate(comida.angulo); // Rotaciona o canvas
+            ctx.drawImage(imagens.comida, -comida.radius, -comida.radius, comida.radius * 2, comida.radius * 2);
+            ctx.restore(); // Restaura o estado do canvas
         }
 
         function desenharPontuacao() {
@@ -146,7 +150,6 @@ document.addEventListener('DOMContentLoaded', function() {
             ctx.drawImage(comidaRuim.image, -comidaRuim.radius, -comidaRuim.radius, comidaRuim.radius * 2, comidaRuim.radius * 2);
             ctx.restore(); // Restaura o estado do canvas
         }
-        
 
         function criarComida() {
             let comida;
@@ -157,7 +160,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 comida = {
                     x: x,
                     y: 0,
-                    radius: 30
+                    radius: 30,
+                    angulo: Math.random() * 2 * Math.PI, // Adiciona ângulo inicial
+                    velocidadeRotacao: Math.random() * 0.05 + 0.01 // Adiciona velocidade de rotação
                 };
                 sobreposicao = comidas.some(comidaExistente => checarColisao(comida, comidaExistente));
             } while (sobreposicao);
@@ -184,11 +189,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
             comidasRuins.push(comidaRuim);
         }
-        
 
         function atualizarComida() {
             comidas.forEach((comida, index) => {
                 comida.y += velocidadeComida;
+                comida.angulo += comida.velocidadeRotacao; // Atualiza o ângulo de rotação
                 if (comida.y > canvasJogo.height) {
                     comidas.splice(index, 1);
                 }
@@ -219,7 +224,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         }
-        
 
         function aumentarDificuldade() {
             if (pontuacao % 10 === 0) {
@@ -280,7 +284,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (Math.random() < 0.02) criarComidaRuim();
                 if (Math.random() < 0.03) criarComida();
                 requestAnimationFrame(loopJogo);
-                atualizarComidasRuins()
+                atualizarComidasRuins();
             } else {
                 console.log('O jogo acabou.');
                 desenharGameOver(); // Garantir que desenharGameOver seja chamado após o fim do jogo
