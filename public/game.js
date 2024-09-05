@@ -1,355 +1,287 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const startButton = document.getElementById('startGame');
-    const gameCanvas = document.getElementById('gameCanvas');
-    const introScreen = document.getElementById('introScreen');
-    const startGameButton = document.getElementById('startGameButton');
+    const botaoInicio = document.getElementById('startGame');
+    const canvasJogo = document.getElementById('gameCanvas');
+    const telaIntro = document.getElementById('introScreen');
+    const botaoIniciarJogo = document.getElementById('startGameButton');
 
-    introScreen.classList.add('hidden');
-    gameCanvas.style.display = 'none';
-    startButton.style.display = 'block';
+    telaIntro.classList.add('hidden');
+    canvasJogo.style.display = 'none';
+    botaoInicio.style.display = 'block';
 
-    startButton.addEventListener('click', function() {
-        startButton.classList.add('clicked');
+    botaoInicio.addEventListener('click', function() {
+        botaoInicio.classList.add('clicked');
         setTimeout(() => {
-            startButton.style.display = 'none';
-            introScreen.classList.remove('hidden');
-            introScreen.classList.add('visible');
+            botaoInicio.style.display = 'none';
+            telaIntro.classList.remove('hidden');
+            telaIntro.classList.add('visible');
         }, 300);
     });
 
-    function triggerGameOver() {
-        gameOver = true;
-        draw(); // Desenha o estado atual do canvas, incluindo o Game Over
-    }
-    
-
-    
-
-    startGameButton.addEventListener('click', function() {
-        introScreen.classList.remove('visible');
-        introScreen.classList.add('hidden');
+    botaoIniciarJogo.addEventListener('click', function() {
+        telaIntro.classList.remove('visible');
+        telaIntro.classList.add('hidden');
         setTimeout(() => {
-            introScreen.style.display = 'none';
-            gameCanvas.style.display = 'block';
-            startGame();
+            telaIntro.style.display = 'none';
+            canvasJogo.style.display = 'block';
+            iniciarJogo();
         }, 500);
     });
 
-    function startGame() {
-        const ctx = gameCanvas.getContext('2d');
-        const backgroundImage = new Image();
-        backgroundImage.src = 'images/background.png';
+    function iniciarJogo() {
+        const ctx = canvasJogo.getContext('2d');
 
-        let img = new Image();
-        img.src = 'images/brush.png';
+        const imagemFundo = new Image();
+        imagemFundo.src = 'images/background.png';
+        const imagemCesta = new Image();
+        imagemCesta.src = 'images/pou.png'; // Imagem da cesta
+        const imagemGameOver = new Image();
+        imagemGameOver.src = 'images/game-over-background.jpg';
+        const imagemComida = new Image(); // Imagem da comida
+        imagemComida.src = 'images/food.png'; // Substitua com o caminho correto para a sua imagem de comida
+        const imagemComidaRuim = new Image();
+        imagemComidaRuim.src = 'images/bad-food.png';
+        const imagemFundoPontuacao = new Image(); // Imagem do fundo dos pontos
+        imagemFundoPontuacao.src = 'images/brush.png'; // Substitua com o caminho correto para a sua imagem de fundo dos pontos
 
-        let basket = {
-            x: gameCanvas.width / 2 - 35,
-            y: gameCanvas.height - 50,
+        const cesta = {
+            x: canvasJogo.width / 2 - 35,
+            y: canvasJogo.height - 50,
             width: 70,
             height: 40,
             dx: 5
         };
+        let comidas = [];
+        let comidasRuins = [];
+        let velocidadeComida = 2;
+        let pontuacao = 0;
+        let vidas = 3;
+        let jogoAcabou = false;
 
-        let foods = [];
-        let hazards = [];
-        let foodSpeed = 2;
-        let hazardSpeed = 3;
-        let score = 0;
-        let lives = 3;
-        let gameOver = false;
-        let gameOverImage = new Image();
-        gameOverImage.src = 'images/game-over-background.jpg'; // Substitua pelo caminho da sua imagem de game over
+        let teclaDireitaPressionada = false;
+        let teclaEsquerdaPressionada = false;
 
-        let rightPressed = false;
-        let leftPressed = false;
+        function desenharFundo() {
+            const proporcaoCanvas = canvasJogo.width / canvasJogo.height;
+            const proporcaoImagem = imagemFundo.width / imagemFundo.height;
 
-        function drawBackground() {
-            const canvasAspectRatio = gameCanvas.width / gameCanvas.height;
-            const imageAspectRatio = backgroundImage.width / backgroundImage.height;
+            let larguraDesenho, alturaDesenho, deslocamentoX, deslocamentoY;
 
-            let drawWidth, drawHeight, offsetX, offsetY;
-
-            if (canvasAspectRatio > imageAspectRatio) {
-                drawWidth = gameCanvas.width;
-                drawHeight = gameCanvas.width / imageAspectRatio;
-                offsetX = 0;
-                offsetY = (gameCanvas.height - drawHeight) / 2;
+            if (proporcaoCanvas > proporcaoImagem) {
+                larguraDesenho = canvasJogo.width;
+                alturaDesenho = canvasJogo.width / proporcaoImagem;
+                deslocamentoX = 0;
+                deslocamentoY = (canvasJogo.height - alturaDesenho) / 2;
             } else {
-                drawHeight = gameCanvas.height;
-                drawWidth = gameCanvas.height * imageAspectRatio;
-                offsetX = (gameCanvas.width - drawWidth) / 2;
-                offsetY = 0;
+                alturaDesenho = canvasJogo.height;
+                larguraDesenho = canvasJogo.height * proporcaoImagem;
+                deslocamentoX = (canvasJogo.width - larguraDesenho) / 2;
+                deslocamentoY = 0;
             }
 
-            ctx.drawImage(backgroundImage, offsetX, offsetY, drawWidth, drawHeight);
+            ctx.drawImage(imagemFundo, deslocamentoX, deslocamentoY, larguraDesenho, alturaDesenho);
         }
 
-        function drawOverlay() {
+        function desenharSobreposicao() {
             ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-            ctx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
+            ctx.fillRect(0, 0, canvasJogo.width, canvasJogo.height);
         }
 
-        function checkCollision(obj1, obj2) {
-            let dx = obj1.x - obj2.x;
-            let dy = obj1.y - obj2.y;
-            let distance = Math.sqrt(dx * dx + dy * dy);
-
-            return distance < obj1.radius + obj2.radius;
+        function desenharCesta() {
+            ctx.drawImage(imagemCesta, cesta.x, cesta.y, cesta.width, cesta.height);
         }
 
-        function drawBasket() {
-            ctx.fillStyle = "#0095DD";
-            ctx.fillRect(basket.x, basket.y, basket.width, basket.height);
+        function desenharComida(comida) {
+            ctx.drawImage(imagemComida, comida.x - comida.radius, comida.y - comida.radius, comida.radius * 2, comida.radius * 2);
         }
 
-        function drawFood(food) {
-            ctx.beginPath();
-            ctx.arc(food.x, food.y, food.radius, 0, Math.PI * 2);
-            ctx.fillStyle = "#008000";
-            ctx.fill();
-            ctx.closePath();
-        }
-
-        function drawHazard(hazard) {
-            ctx.beginPath();
-            ctx.arc(hazard.x, hazard.y, hazard.radius, 0, Math.PI * 2);
-            ctx.fillStyle = "#FF0000";
-            ctx.fill();
-            ctx.closePath();
-        }
-
-        function drawScore() {
-            ctx.drawImage(img, -1, -5, 200, 60);
+        function desenharPontuacao() {
+            ctx.drawImage(imagemFundoPontuacao, -1, -5, 200, 60); // Usando a imagem do fundo dos pontos
             ctx.fillStyle = "#ffffff";
             ctx.font = "bold 20px 'Righteous', sans-serif";
-            ctx.fillText("Pontuação: " + score, 30, 30);
+            ctx.fillText("Pontuação: " + pontuacao, 30, 30);
         }
 
-        function drawLives() {
-            ctx.drawImage(img, gameCanvas.width - 165, -5, 160, 60);
+        function desenharVidas() {
+            ctx.drawImage(imagemFundoPontuacao, canvasJogo.width - 165, -5, 160, 60); // Usando a imagem do fundo dos pontos
             ctx.fillStyle = "#ffffff";
             ctx.font = "bold 20px 'Righteous', sans-serif";
-            ctx.fillText("Vidas: " + lives, gameCanvas.width - 130, 30);
+            ctx.fillText("Vidas: " + vidas, canvasJogo.width - 130, 30);
         }
 
-        function moveBasket() {
-            if (rightPressed && basket.x + basket.width < gameCanvas.width) {
-                basket.x += basket.dx;
-            } else if (leftPressed && basket.x > 0) {
-                basket.x -= basket.dx;
-            }
-        }
-        
-        let badFoods = []; // Array para armazenar alimentos negativos
-
-        function createBadFood() {
-        let badFood;
-        let isOverlapping;
-
-        do {
-            let x = Math.random() * (gameCanvas.width - 30) + 15;
-            badFood = {
-            x: x,
-            y: 0,
-            radius: 15,
-            color: "#FFFFF" // Cor para identificar o alimento negativo
-            };
-
-            isOverlapping = foods.some(existingFood => checkCollision(badFood, existingFood)) ||
-                        hazards.some(existingHazard => checkCollision(badFood, existingHazard));
-        } while (isOverlapping);
-
-        badFoods.push(badFood);
-        }
-
-        function updateBadFoods() {
-        badFoods.forEach((badFood, index) => {
-            badFood.y += foodSpeed;
-
-            if (badFood.y > gameCanvas.height) {
-            badFoods.splice(index, 1);
-            }
-
-            if (badFood.y + badFood.radius > basket.y &&
-                badFood.x > basket.x && badFood.x < basket.x + basket.width) {
-            badFoods.splice(index, 1);
-            lives--; // Diminui vida ao pegar alimento negativo
-            if (lives <= 0) {
-                gameOver = true;
-            }
-            }
-        });
-        }
-
-        function drawGameOver() {
-            ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height); // Limpa o canvas
-            ctx.drawImage(gameOverImage, 0, 0, gameCanvas.width, gameCanvas.height);
+        function desenharGameOver() {
+            ctx.clearRect(0, 0, canvasJogo.width, canvasJogo.height);
+            ctx.drawImage(imagemGameOver, 0, 0, canvasJogo.width, canvasJogo.height);
             ctx.fillStyle = "#ffffff";
             ctx.font = "bold 40px 'Righteous', sans-serif";
             ctx.textAlign = "center";
-            ctx.fillText("Game Over", gameCanvas.width / 2, gameCanvas.height / 2 - 20);
+            ctx.fillText("Game Over", canvasJogo.width / 2, canvasJogo.height / 2 - 20);
             ctx.font = "bold 20px 'Righteous', sans-serif";
-            ctx.fillText("Pontuação Final: " + score, gameCanvas.width / 2, gameCanvas.height / 2 + 20);
-            ctx.fillText("Clique para Reiniciar", gameCanvas.width / 2, gameCanvas.height / 2 + 60);
-        }
-        
-
-        function drawBadFood(badFood) {
-        ctx.beginPath();
-        ctx.arc(badFood.x, badFood.y, badFood.radius, 0, Math.PI * 2);
-        ctx.fillStyle = badFood.color;
-        ctx.fill();
-        ctx.closePath();
+            ctx.fillText("Pontuação Final: " + pontuacao, canvasJogo.width / 2, canvasJogo.height / 2 + 20);
+            ctx.fillText("Clique para Reiniciar", canvasJogo.width / 2, canvasJogo.height / 2 + 60);
         }
 
+        function desenharComidaRuim(comidaRuim) {
+            ctx.drawImage(comidaRuim.image, comidaRuim.x - comidaRuim.radius, comidaRuim.y - comidaRuim.radius, comidaRuim.radius * 2, comidaRuim.radius * 2);
+        }
 
-        function createFood() {
-            let food;
-            let isOverlapping;
+        function criarComida() {
+            let comida;
+            let sobreposicao;
 
             do {
-                let x = Math.random() * (gameCanvas.width - 30) + 15;
-                food = {
+                let x = Math.random() * (canvasJogo.width - 30) + 15;
+                comida = {
                     x: x,
                     y: 0,
-                    radius: 15
+                    radius: 30 // Ajuste o raio para se adequar ao tamanho da imagem
                 };
+                sobreposicao = comidas.some(comidaExistente => checarColisao(comida, comidaExistente));
+            } while (sobreposicao);
 
-                isOverlapping = foods.some(existingFood => checkCollision(food, existingFood)) ||
-                    hazards.some(existingHazard => checkCollision(food, existingHazard));
-            } while (isOverlapping);
-
-            foods.push(food);
+            comidas.push(comida);
         }
 
-        function createHazard() {
-            let hazard;
-            let isOverlapping;
+        function criarComidaRuim() {
+            let comidaRuim;
+            let sobreposicao;
 
             do {
-                let x = Math.random() * (gameCanvas.width - 30) + 15;
-                hazard = {
+                let x = Math.random() * (canvasJogo.width - 30) + 15;
+                comidaRuim = {
                     x: x,
                     y: 0,
-                    radius: 15
+                    radius: 30,
+                    image: imagemComidaRuim
                 };
+                sobreposicao = comidasRuins.some(comidaRuimExistente => checarColisao(comidaRuim, comidaRuimExistente));
+            } while (sobreposicao);
 
-                isOverlapping = hazards.some(existingHazard => checkCollision(hazard, existingHazard)) ||
-                    foods.some(existingFood => checkCollision(hazard, existingFood));
-            } while (isOverlapping);
-
-            hazards.push(hazard);
+            comidasRuins.push(comidaRuim);
         }
 
-        function updateFood() {
-            foods.forEach((food, index) => {
-                food.y += foodSpeed;
-
-                if (food.y > gameCanvas.height) {
-                    foods.splice(index, 1);
+        function atualizarComida() {
+            comidas.forEach((comida, index) => {
+                comida.y += velocidadeComida;
+                if (comida.y > canvasJogo.height) {
+                    comidas.splice(index, 1);
                 }
-
-                if (food.y + food.radius > basket.y &&
-                    food.x > basket.x && food.x < basket.x + basket.width) {
-                    foods.splice(index, 1);
-                    score++;
-                    increaseDifficulty(); // Aumenta a dificuldade a cada 5 pontos
+                if (comida.y + comida.radius > cesta.y &&
+                    comida.x > cesta.x && comida.x < cesta.x + cesta.width) {
+                    comidas.splice(index, 1);
+                    pontuacao++;
+                    aumentarDificuldade();
                 }
             });
         }
 
-        function updateHazards() {
-            hazards.forEach((hazard, index) => {
-                hazard.y += hazardSpeed;
-
-                if (hazard.y > gameCanvas.height) {
-                    hazards.splice(index, 1);
+        function atualizarComidasRuins() {
+            comidasRuins.forEach((comidaRuim, index) => {
+                comidaRuim.y += velocidadeComida;
+                if (comidaRuim.y > canvasJogo.height) {
+                    comidasRuins.splice(index, 1);
                 }
-
-                if (hazard.y + hazard.radius > basket.y &&
-                    hazard.x > basket.x && hazard.x < basket.x + basket.width) {
-                    hazards.splice(index, 1);
-                    lives--;
-                    if (lives <= 0) {
-                        gameOver = true;
+                if (comidaRuim.y + comidaRuim.radius > cesta.y &&
+                    comidaRuim.x > cesta.x && comidaRuim.x < cesta.x + cesta.width) {
+                    comidasRuins.splice(index, 1);
+                    vidas--;
+                    if (vidas <= 0) {
+                        jogoAcabou = true;
                     }
                 }
             });
         }
 
-        
-        
-        function increaseDifficulty() {
-            if (score % 10 === 0) {
-                foodSpeed += 1;
-                hazardSpeed += 1;
-
-                // Aumenta a frequência de alimentos e perigos
+        function aumentarDificuldade() {
+            if (pontuacao % 10 === 0) {
+                velocidadeComida += 1;
                 for (let i = 0; i < 2; i++) {
-                    createFood();
-                    createHazard();
+                    criarComida();
+                }
+            }
+            if (pontuacao >= 50 && pontuacao % 50 === 0) {
+                for (let i = 0; i < 2; i++) {
+                    criarComida();
                 }
             }
         }
 
-        function draw() {
-            if (gameOver) {
-                drawGameOver();
+        function checarColisao(obj1, obj2) {
+            let dx = obj1.x - obj2.x;
+            let dy = obj1.y - obj2.y;
+            let distancia = Math.sqrt(dx * dx + dy * dy);
+            return distancia < obj1.radius + obj2.radius;
+        }
+
+        function moverCesta() {
+            if (teclaDireitaPressionada && cesta.x + cesta.width < canvasJogo.width) {
+                cesta.x += cesta.dx;
+            }
+            if (teclaEsquerdaPressionada && cesta.x > 0) {
+                cesta.x -= cesta.dx;
+            }
+        }
+
+        function desenhar() {
+            if (jogoAcabou) {
+                desenharGameOver();
                 return;
             }
-
-            ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-            drawBackground();
-            drawOverlay();
-            drawBasket();
-
-            foods.forEach(drawFood);
-            badFoods.forEach(drawBadFood);
-            hazards.forEach(drawHazard);
-            drawScore();
-            drawLives();
+            ctx.clearRect(0, 0, canvasJogo.width, canvasJogo.height);
+            desenharFundo();
+            desenharSobreposicao();
+            desenharCesta();
+            comidas.forEach(desenharComida);
+            comidasRuins.forEach(desenharComidaRuim);
+            desenharPontuacao();
+            desenharVidas();
         }
 
-        
-
-        function update() {
-            if (gameOver) return;
-
-            moveBasket();
-            updateFood();
-            updateHazards();
+        function atualizar() {
+            if (jogoAcabou) return;
+            moverCesta();
+            atualizarComida();
+            atualizarComidasRuins();
         }
 
-        function gameLoop() {
-            draw();
-            update();
-            if (!gameOver) {
-                if (Math.random() < 0.02) createBadFood();
-                if (Math.random() < 0.05) createFood();
-                if (Math.random() < 0.03) createHazard();
-                badFoods.forEach(drawBadFood);
-                updateBadFoods();
-                requestAnimationFrame(gameLoop);
+        function loopJogo() {
+            desenhar();
+            atualizar();
+            if (!jogoAcabou) {
+                if (Math.random() < 0.02) criarComidaRuim();
+                if (Math.random() < 0.03) criarComida();
+                atualizarComidasRuins();
+                requestAnimationFrame(loopJogo);
             }
         }
 
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Right' || e.key === 'ArrowRight') {
-                rightPressed = true;
-            } else if (e.key === 'Left' || e.key === 'ArrowLeft') {
-                leftPressed = true;
+        function teclaPressionada(e) {
+            if (e.key === "Right" || e.key === "ArrowRight") {
+                teclaDireitaPressionada = true;
             }
-        });
-
-        document.addEventListener('keyup', function(e) {
-            if (e.key === 'Right' || e.key === 'ArrowRight') {
-                rightPressed = false;
-            } else if (e.key === 'Left' || e.key === 'ArrowLeft') {
-                leftPressed = false;
+            if (e.key === "Left" || e.key === "ArrowLeft") {
+                teclaEsquerdaPressionada = true;
             }
-        });
+        }
 
-        gameLoop();
+        function teclaLiberada(e) {
+            if (e.key === "Right" || e.key === "ArrowRight") {
+                teclaDireitaPressionada = false;
+            }
+            if (e.key === "Left" || e.key === "ArrowLeft") {
+                teclaEsquerdaPressionada = false;
+            }
+        }
+
+        function cliqueNoCanvas() {
+            if (jogoAcabou) {
+                document.location.reload();
+            }
+        }
+
+        document.addEventListener("keydown", teclaPressionada);
+        document.addEventListener("keyup", teclaLiberada);
+        canvasJogo.addEventListener("click", cliqueNoCanvas);
+
+        loopJogo();
     }
 });
