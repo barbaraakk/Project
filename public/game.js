@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const botaoInicio = document.getElementById('startGame');
     const canvasJogo = document.getElementById('gameCanvas');
     const telaIntro = document.getElementById('introScreen');
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     canvasJogo.style.display = 'none';
     botaoInicio.style.display = 'block';
 
-    botaoInicio.addEventListener('click', function() {
+    botaoInicio.addEventListener('click', function () {
         botaoInicio.classList.add('clicked');
         setTimeout(() => {
             botaoInicio.style.display = 'none';
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 300);
     });
 
-    botaoIniciarJogo.addEventListener('click', function() {
+    botaoIniciarJogo.addEventListener('click', function () {
         telaIntro.classList.remove('visible');
         telaIntro.classList.add('hidden');
         setTimeout(() => {
@@ -26,8 +26,10 @@ document.addEventListener('DOMContentLoaded', function() {
             iniciarJogo();
         }, 500);
     });
+    canvasJogo.removeEventListener('click', cliqueNoCanvas); // Remover listeners antigos
 
     function iniciarJogo() {
+        // Definição e carregamento das imagens
         const ctx = canvasJogo.getContext('2d');
 
         const imagens = {
@@ -36,7 +38,8 @@ document.addEventListener('DOMContentLoaded', function() {
             gameOver: new Image(),
             comida: new Image(),
             comidaRuim: new Image(),
-            fundoPontuacao: new Image()
+            fundoPontuacao: new Image(),
+            tela5Pontos: new Image()
         };
 
         imagens.fundo.src = 'images/background.png';
@@ -45,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
         imagens.comida.src = 'images/food.png';
         imagens.comidaRuim.src = 'images/bad-food.png';
         imagens.fundoPontuacao.src = 'images/brush.png';
+        imagens.tela5Pontos.src = 'images/background.png';
 
         let todasImagensCarregadas = 0;
         const totalImagens = Object.keys(imagens).length;
@@ -58,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
         }
 
+        // Reinicializa os parâmetros do jogo
         let cesta = {
             x: canvasJogo.width / 2 - 35,
             y: canvasJogo.height - 50,
@@ -75,6 +80,17 @@ document.addEventListener('DOMContentLoaded', function() {
         let teclaDireitaPressionada = false;
         let teclaEsquerdaPressionada = false;
 
+        let tela5PontosExibida = false;
+        let jogoPausado = false;
+
+        function desenharTela5Pontos() {
+            if (imagens.tela5Pontos.complete) {
+                ctx.clearRect(0, 0, canvasJogo.width, canvasJogo.height); // Limpa o canvas
+                ctx.drawImage(imagens.tela5Pontos, 0, 0, canvasJogo.width, canvasJogo.height); // Desenha a nova imagem de fundo
+            }
+        }
+
+        // Restante da função para configurar o jogo, desenhar e atualizar
         function desenharFundo() {
             const proporcaoCanvas = canvasJogo.width / canvasJogo.height;
             const proporcaoImagem = imagens.fundo.width / imagens.fundo.height;
@@ -128,20 +144,89 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function desenharGameOver() {
-            if (imagens.gameOver.complete) { // Verifica se a imagem foi carregada
+            if (imagens.gameOver.complete) {
                 ctx.clearRect(0, 0, canvasJogo.width, canvasJogo.height);
                 ctx.drawImage(imagens.gameOver, 0, 0, canvasJogo.width, canvasJogo.height);
-                ctx.fillStyle = "#ffffff";
-                ctx.font = "bold 40px 'Righteous', sans-serif";
-                ctx.textAlign = "center";
-                ctx.fillText("Game Over", canvasJogo.width / 2, canvasJogo.height / 2 - 20);
+
+                // Desenha a pontuação final no meio da tela
                 ctx.font = "bold 20px 'Righteous', sans-serif";
-                ctx.fillText("Pontuação Final: " + pontuacao, canvasJogo.width / 2, canvasJogo.height / 2 + 20);
-                ctx.fillText("Clique para Reiniciar", canvasJogo.width / 2, canvasJogo.height / 2 + 60);
-            } else {
-                console.log('Imagem de Game Over ainda não carregada.');
+                ctx.fillText("Pontuação Final: " + pontuacao, 345, 62);
+
+                // Desenha os botões
+                const larguraBotao = 150;
+                const alturaBotao = 40;
+                const espacoEntreBotoes = 20;
+                const posY = canvasJogo.height / 2 + 40; // Ajusta a posição Y dos botões
+
+                // Ajuste a posição X do botão "Tentar Novamente"
+                const ajusteEsquerda = 290; // Ajuste para mover o botão para a esquerda
+                const posXTentativa = canvasJogo.width / 2 - (larguraBotao + espacoEntreBotoes) / 2 - ajusteEsquerda; // Pos X do botão "Tentar Novamente"
+
+                // Ajuste a posição X do botão "Aceitar"
+                const ajusteDireita = 180; // Ajuste para mover o botão "Aceitar" para a direita
+                const posXAceitar = canvasJogo.width / 2 + espacoEntreBotoes / 2 + ajusteDireita; // Pos X do botão "Aceitar"
+
+                // Botão "Tentar Novamente"
+                ctx.fillStyle = "#333"; // Cor de fundo escura
+                ctx.fillRect(posXTentativa, posY, larguraBotao, alturaBotao);
+                ctx.strokeStyle = "#555"; // Cor da borda (não desenha a borda)
+                ctx.lineWidth = 3; // Largura da borda (não desenha a borda)
+                ctx.strokeRect(posXTentativa, posY, larguraBotao, alturaBotao);
+                ctx.fillStyle = "#fff"; // Cor do texto
+                ctx.font = "bold 15px 'Righteous', sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText("Tentar Novamente", posXTentativa + larguraBotao / 2, posY + alturaBotao / 2 + 5);
+
+                // Botão "Aceitar"
+                ctx.fillStyle = "#333"; // Cor de fundo escura
+                ctx.fillRect(posXAceitar, posY, larguraBotao, alturaBotao);
+                ctx.strokeStyle = "#555"; // Cor da borda (não desenha a borda)
+                ctx.lineWidth = 3; // Largura da borda (não desenha a borda)
+                ctx.strokeRect(posXAceitar, posY, larguraBotao, alturaBotao);
+                ctx.fillStyle = "#fff"; // Cor do texto
+                ctx.font = "bold 15px 'Righteous', sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText("Aceitar", posXAceitar + larguraBotao / 2, posY + alturaBotao / 2 + 5);
+
+                // Adiciona eventos de movimento do mouse e clique
+                canvasJogo.addEventListener('mousemove', function (event) {
+                    const rect = canvasJogo.getBoundingClientRect();
+                    const mouseX = event.clientX - rect.left;
+                    const mouseY = event.clientY - rect.top;
+
+                    // Verifica se o mouse está sobre os botões
+                    if (mouseX >= posXTentativa && mouseX <= posXTentativa + larguraBotao &&
+                        mouseY >= posY && mouseY <= posY + alturaBotao ||
+                        mouseX >= posXAceitar && mouseX <= posXAceitar + larguraBotao &&
+                        mouseY >= posY && mouseY <= posY + alturaBotao) {
+                        canvasJogo.style.cursor = 'pointer'; // Define o cursor como uma mãozinha
+                    } else {
+                        canvasJogo.style.cursor = 'default'; // Define o cursor como padrão quando não estiver sobre os botões
+                    }
+                });
+
+                canvasJogo.addEventListener('click', function (event) {
+                    const rect = canvasJogo.getBoundingClientRect();
+                    const mouseX = event.clientX - rect.left;
+                    const mouseY = event.clientY - rect.top;
+
+                    // Verifica se o clique está dentro do botão "Tentar Novamente"
+                    if (mouseX >= posXTentativa && mouseX <= posXTentativa + larguraBotao &&
+                        mouseY >= posY && mouseY <= posY + alturaBotao) {
+                        location.reload(); // Reinicia o jogo
+                    }
+
+                    // Verifica se o clique está dentro do botão "Aceitar"
+                    if (mouseX >= posXAceitar && mouseX <= posXAceitar + larguraBotao &&
+                        mouseY >= posY && mouseY <= posY + alturaBotao) {
+                        console.log("Aceitar clicado!");
+                    }
+                });
             }
         }
+
+
+
 
         function desenharComidaRuim(comidaRuim) {
             ctx.save(); // Salva o estado atual do canvas
@@ -181,12 +266,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 velocidadeRotacao: Math.random() * 0.05 + 0.01
             };
             let sobreposicao;
-        
+
             do {
                 comidaRuim.x = Math.random() * (canvasJogo.width - 30) + 15;
                 sobreposicao = comidasRuins.some(comidaRuimExistente => checarColisao(comidaRuim, comidaRuimExistente));
             } while (sobreposicao);
-        
+
             comidasRuins.push(comidaRuim);
         }
 
@@ -201,15 +286,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     comida.x > cesta.x && comida.x < cesta.x + cesta.width) {
                     comidas.splice(index, 1);
                     pontuacao++;
+                    if (pontuacao === 5 && !tela5PontosExibida) {
+                        tela5PontosExibida = true; // Marca a tela como exibida
+                        jogoPausado = true
+                    }
                     aumentarDificuldade();
                 }
             });
         }
-
         function atualizarComidasRuins() {
             comidasRuins.forEach((comidaRuim, index) => {
                 comidaRuim.y += velocidadeComida;
-                comidaRuim.angulo += comidaRuim.velocidadeRotacao; // Atualiza o ângulo de rotação
+                comidaRuim.angulo += comidaRuim.velocidadeRotacao;
                 if (comidaRuim.y > canvasJogo.height) {
                     comidasRuins.splice(index, 1);
                 }
@@ -224,6 +312,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         }
+
 
         function aumentarDificuldade() {
             if (pontuacao % 10 === 0) {
@@ -256,6 +345,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function desenhar() {
+            if (tela5PontosExibida) {
+                desenharTela5Pontos();
+                return;
+            }
             if (jogoAcabou) {
                 desenharGameOver();
                 return;
@@ -271,6 +364,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function atualizar() {
+            if (jogoPausado) {
+                return; // Interrompe a execução se o jogo estiver pausado
+            }
             if (jogoAcabou) return;
             moverCesta();
             atualizarComida();
@@ -278,16 +374,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function loopJogo() {
-            desenhar();
-            atualizar();
-            if (!jogoAcabou) {
+            if (jogoAcabou) {
+                desenharGameOver();
+            } else {
+                desenhar();
+                atualizar();
                 if (Math.random() < 0.02) criarComidaRuim();
                 if (Math.random() < 0.03) criarComida();
                 requestAnimationFrame(loopJogo);
-                atualizarComidasRuins();
-            } else {
-                console.log('O jogo acabou.');
-                desenharGameOver(); // Garantir que desenharGameOver seja chamado após o fim do jogo
             }
         }
 
@@ -306,12 +400,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             if (e.key === "Left" || e.key === "ArrowLeft") {
                 teclaEsquerdaPressionada = false;
-            }
-        }
-
-        function cliqueNoCanvas() {
-            if (jogoAcabou) {
-                document.location.reload();
             }
         }
 

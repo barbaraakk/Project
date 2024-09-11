@@ -671,52 +671,34 @@ body {
 		top: 15px;
 	}
 }
-
-#gameOverScreen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.visualNovelBackground {
+#canvas-container {
     position: relative;
-    background-image: url('images/visual-novel-background.jpg'); /* Substitua pelo caminho da sua imagem */
-    background-size: cover;
-    background-position: center;
-    width: 80%;
-    height: 60%;
-    border-radius: 15px;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
-.visualNovelText {
-    color: #ffffff;
-    font-family: 'Righteous', sans-serif;
-    text-align: center;
+.botao-jogo {
+    padding: 12px 24px;
+    background-color: #333; /* Cor de fundo escura */
+    border: 2px solid #000; /* Borda preta */
+    border-radius: 8px; /* Bordas arredondadas para um visual mais moderno */
+    color: #fff; /* Cor do texto branca */
+    font-family: 'Montserrat', sans-serif; /* Fonte mais legível e sofisticada */
+    font-size: 18px; /* Tamanho de fonte um pouco maior */
+    font-weight: 600; /* Texto em negrito para destaque */
+    cursor: pointer; /* Mãozinha ao passar o mouse */
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s; /* Transições suaves para hover e clique */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra suave para dar profundidade */
 }
 
-.visualNovelText p {
-    font-size: 30px;
-    margin: 0;
+.botao-jogo:hover {
+    background-color: #444; /* Cor de fundo um pouco mais clara ao passar o mouse */
+    box-shadow: 0 4px 8px rgba(255, 0, 0, 0.5); /* Sombra vermelha ao passar o mouse */
+	transform: scale(1.05); /* Aumenta o tamanho do botão suavemente */
 }
 
-#restartButton {
-    margin-top: 10px;
-    padding: 10px 20px;
-    font-size: 20px;
-    background-color: #f53b2c;
-    border: none;
-    border-radius: 5px;
-    color: #ffffff;
-    cursor: pointer;
+.botao-jogo:active {
+    background-color: #555; /* Cor de fundo ainda mais clara ao clicar */
+    box-shadow: 0 4px 8px rgba(255, 0, 0, 0.8); /* Sombra vermelha mais intensa ao clicar */
+	transform: scale(0.95); /* Diminui o tamanho do botão suavemente */
 }
+
+
