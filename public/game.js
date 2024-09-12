@@ -26,11 +26,15 @@ document.addEventListener('DOMContentLoaded', function () {
             iniciarJogo();
         }, 500);
     });
-    canvasJogo.removeEventListener('click', cliqueNoCanvas); // Remover listeners antigos
+    
 
     function iniciarJogo() {
         // Definição e carregamento das imagens
         const ctx = canvasJogo.getContext('2d');
+
+        const somDano = new Audio('sounds/dano.mp3');
+        const somMorte = new Audio('sounds/Morte.mp3');
+
 
         const imagens = {
             fundo: new Image(),
@@ -39,7 +43,8 @@ document.addEventListener('DOMContentLoaded', function () {
             comida: new Image(),
             comidaRuim: new Image(),
             fundoPontuacao: new Image(),
-            tela5Pontos: new Image()
+            tela5Pontos: new Image(),
+            imagemAceite: new Image()
         };
 
         imagens.fundo.src = 'images/background.png';
@@ -49,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
         imagens.comidaRuim.src = 'images/bad-food.png';
         imagens.fundoPontuacao.src = 'images/brush.png';
         imagens.tela5Pontos.src = 'images/background.png';
+        imagens.imagemAceite.src = 'images/food.png';
 
         let todasImagensCarregadas = 0;
         const totalImagens = Object.keys(imagens).length;
@@ -82,6 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         let tela5PontosExibida = false;
         let jogoPausado = false;
+        
 
         function desenharTela5Pontos() {
             if (imagens.tela5Pontos.complete) {
@@ -89,6 +96,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 ctx.drawImage(imagens.tela5Pontos, 0, 0, canvasJogo.width, canvasJogo.height); // Desenha a nova imagem de fundo
             }
         }
+
+       
 
         // Restante da função para configurar o jogo, desenhar e atualizar
         function desenharFundo() {
@@ -142,6 +151,13 @@ document.addEventListener('DOMContentLoaded', function () {
             ctx.font = "bold 20px 'Righteous', sans-serif";
             ctx.fillText("Vidas: " + vidas, canvasJogo.width - 130, 30);
         }
+
+        function cliqueNoBotaoAceitar() {
+            ctx.clearRect(0, 0, canvasJogo.width, canvasJogo.height);
+            ctx.drawImage(imagens.imagemAceite, 0, 0, canvasJogo.width, canvasJogo.height);
+            console.log("Aceitar clicado!");  // Debug para garantir que o botão está funcionando
+        }
+
 
         function desenharGameOver() {
             if (imagens.gameOver.complete) {
@@ -210,16 +226,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     const mouseX = event.clientX - rect.left;
                     const mouseY = event.clientY - rect.top;
 
-                    // Verifica se o clique está dentro do botão "Tentar Novamente"
                     if (mouseX >= posXTentativa && mouseX <= posXTentativa + larguraBotao &&
                         mouseY >= posY && mouseY <= posY + alturaBotao) {
-                        location.reload(); // Reinicia o jogo
+                        location.reload();
                     }
 
-                    // Verifica se o clique está dentro do botão "Aceitar"
                     if (mouseX >= posXAceitar && mouseX <= posXAceitar + larguraBotao &&
                         mouseY >= posY && mouseY <= posY + alturaBotao) {
-                        console.log("Aceitar clicado!");
+                        cliqueNoBotaoAceitar();
                     }
                 });
             }
@@ -305,7 +319,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     comidaRuim.x > cesta.x && comidaRuim.x < cesta.x + cesta.width) {
                     comidasRuins.splice(index, 1);
                     vidas--;
+                    somDano.play();
                     if (vidas <= 0) {
+                        somMorte.play()
                         jogoAcabou = true;
                         console.log("Jogo acabou, vidas esgotadas.");
                     }
@@ -405,7 +421,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         document.addEventListener("keydown", teclaPressionada);
         document.addEventListener("keyup", teclaLiberada);
-        canvasJogo.addEventListener("click", cliqueNoCanvas);
 
         function iniciarLoopJogo() {
             loopJogo();

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aguardando...</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(65, 0, 0, 1) 45%, rgba(177, 0, 0, 1) 100%);
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8); /* Fundo meio preto */
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        #countdown {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #f4f4f4; /* Cor do texto */
+        }
+        #message {
+            font-size: 1.5em;
+            color: #f4f4f4; /* Cor do texto */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="countdown">Carregando...</div>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        // Data e hora alvo em horário de Brasília
+        const targetDate = new Date();
+        targetDate.setFullYear(2024, 8, 17); // Ano, mês (0-based, setembro é 8), dia
+        targetDate.setHours(0, 0, 0, 0); // Define para 00:00:00:000
+        targetDate.setTime(targetDate.getTime() - (3 * 60 * 60 * 1000)); // Ajuste para horário de Brasília (GMT-3)
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const timeLeft = targetDate - now;
+
+            if (timeLeft <= 0) {
+                window.location.href = 'index.html'; // Redireciona para a página principal
+                return;
+            }
+
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown').textContent = 
+                `${days}d ${hours}h ${minutes}m ${seconds}s até o desbloqueio`;
+            
+            document.getElementById('message').textContent = 
+                'O site será desbloqueado quando o cronômetro chegar a 00:00 do dia 17 de setembro de 2024.';
+
+            setTimeout(updateCountdown, 1000);
+        }
+
+        updateCountdown();
+    </script>
+</body>
+</html>

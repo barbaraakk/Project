@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Showcase of Excellence</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Garantir que body e html ocupem 100% da altura da viewport */
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden; /* Desativa a rolagem */
+        }
+
+        /* Adiciona o fundo com o degradê vermelho à página showcase */
+        .content {
+            background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(65, 0, 0, 1) 45%, rgba(177, 0, 0, 1) 100%);
+            color: #fff;
+            height: calc(100vh - 70px); /* Define a altura da seção para ocupar a altura total da viewport menos a altura do footer */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+
+        .content h1 {
+            font-size: 3rem;
+            text-align: center;
+            font-family: 'Righteous', cursive;
+        }
+
+        .content p {
+            font-size: 1.8rem;
+            text-align: center;
+            margin: 1rem 0;
+            font-family: 'Righteous', cursive;
+        }
+
+        .content ul {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        .content ul li {
+            font-size: 1.6rem;
+            margin: 0.5rem 0;
+        }
+
+        /* Estilo para a navbar */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        /* Estilo para o footer */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #111;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .footer-logo a {
+            color: #fff;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .footer-text p {
+            margin: 0;
+        }
+
+        .footer-text a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .footer-social a {
+            color: #fff;
+            margin: 0 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="nav">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">MandZatsu</a>
+            </div>
+            <div id="mainListDiv" class="main_list">
+                <ul class="navlinks">
+                    <li><a href="showcase.html">Showcase of Excellence</a></li>
+                    <li><a href="#">Only for You</a></li>
+                    <li><a href="#">The Devil?</a></li>
+                    <li><a href="#">愛のギフト</a></li>
+                </ul>
+            </div>
+            <span class="navTrigger">
+                <i></i>
+                <i></i>
+                <i></i>
+            </span>
+        </div>
+    </nav>
+    
+    <!-- Seção principal -->
+    <section class="content">
+        <h1>Showcase of Excellence</h1>
+        <p>Ah, uma vitrine de excelência, é? Huh, quem teve essa ideia? Estes são os envolvidos? E pensar que vocês realmente acham que eu sou alguém tão importante! Bom, eu posso até dar o braço a torcer e dizer que aprecio todos vocês. Aqui estão os nomes:</p>
+        <div class="showcase-list">
+            <div class="showcase-item">
+                <img src="images/imgtest.png" alt="Nome 1">
+                <div class="showcase-text">
+                    <p>"Ah Zat, eu amo você, vamos jogar Brawhalla longe do Gab???"</p>
+                    <span>Bárbara</span>
+                </div>
+            </div>
+            <div class="showcase-item">
+                <img src="images/imgtest.png" alt="Nome 2">
+                <div class="showcase-text">
+                    <p>"Eu não concordo com isso não, relaxou Barbara"</p>
+                    <span>Gab</span>
+                </div>
+            </div>
+            <div class="showcase-item">
+                <img src="images/imgtest.png" alt="Nome 3">
+                <div class="showcase-text">
+                    <p>"Você pode vir dormir na minha casa Gab"</p>
+                    <span>Paixax</span>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">
+                <a href="#footer">♡</a>
+            </div>
+            <div class="footer-text">
+                <p><a href="terms.html" class="footer-link">©</a> 17/09/2024. Todos os direitos reservados APENAS para <a href="https://x.com/MandZatsu" target="_blank" class="footer-link">@MandZatsu</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery e Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    
+    <!-- Script para o menu responsivo e a fixação da navbar ao rolar -->
+    <script>
+        $(document).ready(function() {
+            $(window).scroll(function() {
+                if ($(document).scrollTop() > 50) {
+                    $('.nav').addClass('affix');
+                } else {
+                    $('.nav').removeClass('affix');
+                }
+            });
+
+            $('.navTrigger').click(function () {
+                $(this).toggleClass('active');
+                $("#mainListDiv").toggleClass("show_list");
+                $("#mainListDiv").toggle();
+            });
+        });
+    </script>
+</body>
+</html>

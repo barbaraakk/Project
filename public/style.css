@@ -397,6 +397,86 @@ body {
 	}
 }
 
+
+/* Estilo da lista de showcase */
+.showcase-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem; /* Espaçamento entre os itens */
+    width: 100%;
+    max-width: 800px; /* Largura máxima da lista */
+    margin: 0 auto; /* Centraliza a lista */
+}
+
+/* Estilo dos itens da showcase */
+.showcase-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Espaçamento entre a foto e o texto */
+    background: rgba(255, 255, 255, 0.1); /* Fundo levemente transparente para destacar os itens */
+    padding: 1rem;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box; /* Inclui o padding e border na largura total do item */
+}
+
+/* Alinha os itens com base na sua posição */
+.showcase-item:nth-child(odd) {
+    flex-direction: row; /* Foto à esquerda e texto à direita */
+    justify-content: flex-start;
+}
+
+.showcase-item:nth-child(even) {
+    flex-direction: row-reverse; /* Foto à direita e texto à esquerda */
+    justify-content: flex-end;
+}
+
+.showcase-item img {
+    width: 80px; /* Largura da foto */
+    height: 80px; /* Altura da foto */
+    border-radius: 8px; /* Torna a foto quadrada com bordas arredondadas */
+    object-fit: cover; /* Garante que a imagem não distorça */
+}
+
+.showcase-text {
+    color: #fff;
+}
+
+.showcase-text p {
+    margin: 0;
+    font-size: 1.2rem;
+    font-family: 'Righteous', cursive;
+}
+
+.showcase-text span {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    font-style: italic;
+    color: #ccc;
+}
+
+@media (max-width: 768px) {
+    .showcase-item {
+        flex-direction: column; /* Alinha foto e texto verticalmente em telas menores */
+        align-items: center;
+    }
+
+    .showcase-item img {
+        width: 60px; /* Ajusta o tamanho da foto para telas menores */
+        height: 60px;
+    }
+
+    .showcase-text {
+        text-align: center; /* Centraliza o texto */
+    }
+}
+/*GAME CSS ------------------------------------------------------------------*/
+
+
+
 #gameCanvas {
 	display: none;
 	/* Inicialmente escondido */

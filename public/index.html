@@ -14,11 +14,11 @@
     <nav class="nav">
         <div class="container">
             <div class="logo">
-                <a href="#">MandZatsu</a>
+                <a href="index.html">MandZatsu</a>
             </div>
             <div id="mainListDiv" class="main_list">
                 <ul class="navlinks">
-                    <li><a href="#">Showcase of Excellence</a></li>
+                    <li><a href="showcase.html">Showcase of Excellence</a></li>
                     <li><a href="#">Only for You</a></li>
                     <li><a href="#">The Devil?</a></li>
                     <li><a href="#">愛のギフト</a></li>
@@ -41,7 +41,7 @@
                 <div id="introWrapper">
                     <div id="introContent">
                         <p>Bem-vindo ao jogo! Aqui está um breve resumo sobre o que fazer:</p>
-                        <p>Você controla MandZatsu e deve pegar todos os podrões e pizzas que cairem do topo da tela enquanto evita os perigosos Ugly Bastards. Boa sorte!
+                        <p>Você controla MandZatsu e deve pegar todas as pizzas que cairem do topo da tela enquanto evita os perigosos Ugly Bastards. Boa sorte!
                         </p>
                         <b>ATENÇÃO:</b>
                         <br>
@@ -63,11 +63,10 @@
         <h2 class="myH2">O QUE QUE É ISSO DAQUI?</h2>
         <p class="myP">Isso daqui é um site especial feito para você.</p>
         <p class="myP">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum ratione facere animi impedit rem labore sint repellendus ipsa sapiente voluptatem aut excepturi quo itaque, ab earum cumque. Voluptatem beatae id inventore quod voluptate qui deserunt, quis placeat, tempora ex totam, dolore sequi harum eos voluptatibus animi labore officiis minus laboriosam.
+            <Easter-eggs><i>Dúvido clica aqui</i></Easter-eggs>.
         </p>
     </div>
 
-    
 
   
 
@@ -95,6 +94,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     
+
+
     <!-- Script para o menu responsivo e a fixação da navbar ao rolar -->
     <script>
         $(document).ready(function() {
@@ -126,6 +127,9 @@
         });
     </script>
 
+    <script>document.querySelector('Easter-eggs').addEventListener('click', () => {
+        alert('🎉🎂 Parabéns, Mandzatsu! Feliz aniversário, e quem clicou é viado🎂🎉');
+    });</script>
     <!-- Script do jogo -->
     <script src="game.js"></script>
     
