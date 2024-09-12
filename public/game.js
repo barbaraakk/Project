@@ -17,21 +17,38 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 300);
     });
 
+    const musicaFundo = new Audio('sounds/musgafundo.mp3')
+    musicaFundo.loop = true;  // Define para repetir a música
+    musicaFundo.volume = 0.5; // Define o volume da música
+
+    function tocarMusicaFundo() {
+        musicaFundo.play();
+    }
+    
+    function pararMusicaFundo() {
+        musicaFundo.pause();
+        musicaFundo.currentTime = 0; // Reseta o tempo da música
+    }
+    
+
     botaoIniciarJogo.addEventListener('click', function () {
         telaIntro.classList.remove('visible');
         telaIntro.classList.add('hidden');
         setTimeout(() => {
             telaIntro.style.display = 'none';
             canvasJogo.style.display = 'block';
+            tocarMusicaFundo();
             iniciarJogo();
         }, 500);
     });
+
     
 
     function iniciarJogo() {
         // Definição e carregamento das imagens
         const ctx = canvasJogo.getContext('2d');
 
+       
         const somDano = new Audio('sounds/dano.mp3');
         const somMorte = new Audio('sounds/Morte.mp3');
 
@@ -89,6 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let tela5PontosExibida = false;
         let jogoPausado = false;
         
+        
 
         function desenharTela5Pontos() {
             if (imagens.tela5Pontos.complete) {
@@ -97,7 +115,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-       
 
         // Restante da função para configurar o jogo, desenhar e atualizar
         function desenharFundo() {
@@ -228,11 +245,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     if (mouseX >= posXTentativa && mouseX <= posXTentativa + larguraBotao &&
                         mouseY >= posY && mouseY <= posY + alturaBotao) {
+                        pararMusicaFundo()
                         location.reload();
                     }
 
                     if (mouseX >= posXAceitar && mouseX <= posXAceitar + larguraBotao &&
                         mouseY >= posY && mouseY <= posY + alturaBotao) {
+                        pararMusicaFundo()
                         cliqueNoBotaoAceitar();
                     }
                 });
@@ -300,8 +319,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     comida.x > cesta.x && comida.x < cesta.x + cesta.width) {
                     comidas.splice(index, 1);
                     pontuacao++;
-                    if (pontuacao === 5 && !tela5PontosExibida) {
+                    if (pontuacao === 100 && !tela5PontosExibida) {
                         tela5PontosExibida = true; // Marca a tela como exibida
+                        pararMusicaFundo()
                         jogoPausado = true
                     }
                     aumentarDificuldade();
