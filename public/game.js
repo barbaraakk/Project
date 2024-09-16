@@ -47,8 +47,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function iniciarJogo() {
         // Definição e carregamento das imagens
         const ctx = canvasJogo.getContext('2d');
-
-       
         const somDano = new Audio('sounds/dano.mp3');
         const somMorte = new Audio('sounds/Morte.mp3');
 
@@ -65,13 +63,13 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         imagens.fundo.src = 'images/background.png';
-        imagens.cesta.src = 'images/pou.png';
-        imagens.gameOver.src = 'images/game-over-background.jpg';
+        imagens.cesta.src = 'images/zat.png';
+        imagens.gameOver.src = 'images/game-over-background.png';
         imagens.comida.src = 'images/food.png';
         imagens.comidaRuim.src = 'images/bad-food.png';
         imagens.fundoPontuacao.src = 'images/brush.png';
-        imagens.tela5Pontos.src = 'images/background.png';
-        imagens.imagemAceite.src = 'images/food.png';
+        imagens.tela5Pontos.src = 'images/imgtest.png';
+        imagens.imagemAceite.src = 'images/aceite.png';
 
         let todasImagensCarregadas = 0;
         const totalImagens = Object.keys(imagens).length;
@@ -88,14 +86,14 @@ document.addEventListener('DOMContentLoaded', function () {
         // Reinicializa os parâmetros do jogo
         let cesta = {
             x: canvasJogo.width / 2 - 35,
-            y: canvasJogo.height - 50,
-            width: 70,
-            height: 40,
+            y: 480,
+            width: 160,
+            height: 80,
             dx: 5
         };
         let comidas = [];
         let comidasRuins = [];
-        let velocidadeComida = 2;
+        let velocidadeComida = 1.5;
         let pontuacao = 0;
         let vidas = 3;
         let jogoAcabou = false;
@@ -110,8 +108,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function desenharTela5Pontos() {
             if (imagens.tela5Pontos.complete) {
-                ctx.clearRect(0, 0, canvasJogo.width, canvasJogo.height); // Limpa o canvas
-                ctx.drawImage(imagens.tela5Pontos, 0, 0, canvasJogo.width, canvasJogo.height); // Desenha a nova imagem de fundo
+                ctx.fillRect(0, 0, canvasJogo.width, canvasJogo.height);
+                ctx.drawImage(imagens.fundo5Pontos, 0, 0, canvasJogo.width, canvasJogo.height); // Exemplo de fundo
+
             }
         }
 
@@ -289,24 +288,35 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         function criarComidaRuim() {
-            let x = Math.random() * (canvasJogo.width - 30) + 15;
-            let comidaRuim = {
-                x: x,
-                y: 0,
-                radius: 30,
-                image: imagens.comidaRuim,
-                angulo: Math.random() * 2 * Math.PI,
-                velocidadeRotacao: Math.random() * 0.05 + 0.01
-            };
+            let x, y, comidaRuim;
             let sobreposicao;
-
+            const espacoMinimo = 60; // Ajuste para aumentar o espaço entre comidas ruins
+            const numeroMaximoComidasRuins = 5; // Limita o número máximo de comidas ruins
+        
+            // Verifica o número atual de comidas ruins
+            if (comidasRuins.length >= numeroMaximoComidasRuins) {
+                return; // Não cria novas comidas ruins se o limite for alcançado
+            }
+        
             do {
-                comidaRuim.x = Math.random() * (canvasJogo.width - 30) + 15;
+                x = Math.random() * (canvasJogo.width - 30) + 15;
+                y = 0;
+                comidaRuim = {
+                    x: x,
+                    y: y,
+                    radius: 30, // Pode ser ajustado conforme a necessidade
+                    image: imagens.comidaRuim,
+                    angulo: Math.random() * 2 * Math.PI,
+                    velocidadeRotacao: Math.random() * 0.02 + 0.01 // Reduz a velocidade de rotação
+                };
+        
+                // Verifica se há sobreposição com outras comidas ruins
                 sobreposicao = comidasRuins.some(comidaRuimExistente => checarColisao(comidaRuim, comidaRuimExistente));
             } while (sobreposicao);
-
+        
             comidasRuins.push(comidaRuim);
         }
+        
 
         function atualizarComida() {
             comidas.forEach((comida, index) => {
@@ -351,14 +361,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         function aumentarDificuldade() {
-            if (pontuacao % 10 === 0) {
-                velocidadeComida += 1;
-                for (let i = 0; i < 2; i++) {
-                    criarComida();
-                }
-            }
             if (pontuacao >= 50 && pontuacao % 50 === 0) {
-                for (let i = 0; i < 2; i++) {
+                for (let i = 0; i < 1; i++) { // Cria menos comidas
                     criarComida();
                 }
             }

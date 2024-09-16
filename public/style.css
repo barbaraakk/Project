@@ -17,6 +17,16 @@ body {
 	font-family: 'Bebas Neue', cursive;
 }
 
+.content {
+    text-align: center; /* Opcional, se você quiser centralizar o conteúdo */
+}
+
+.content img {
+    max-width: 64.8%; /* Ajusta a largura máxima da imagem */
+    height: auto;    /* Mantém a proporção da imagem */
+}
+
+
 /* Navbar fixa no topo da página */
 .nav {
 	z-index: 20;
@@ -422,22 +432,38 @@ body {
     box-sizing: border-box; /* Inclui o padding e border na largura total do item */
 }
 
-/* Alinha os itens com base na sua posição */
+/* O primeiro e o terceiro item terão a imagem à esquerda */
 .showcase-item:nth-child(odd) {
-    flex-direction: row; /* Foto à esquerda e texto à direita */
-    justify-content: flex-start;
+    flex-direction: row; /* Imagem à esquerda e texto à direita */
 }
 
+/* O segundo e o quarto item terão a imagem à direita */
 .showcase-item:nth-child(even) {
-    flex-direction: row-reverse; /* Foto à direita e texto à esquerda */
-    justify-content: flex-end;
+    flex-direction: row-reverse; /* Imagem à direita e texto à esquerda */
 }
+
 
 .showcase-item img {
     width: 80px; /* Largura da foto */
     height: 80px; /* Altura da foto */
     border-radius: 8px; /* Torna a foto quadrada com bordas arredondadas */
     object-fit: cover; /* Garante que a imagem não distorça */
+}
+
+@media (max-width: 768px) {
+    .showcase-item {
+        flex-direction: column; /* Alinha foto e texto verticalmente em telas menores */
+        align-items: center;
+    }
+
+    .showcase-item img {
+        width: 60px; /* Ajusta o tamanho da foto para telas menores */
+        height: 60px;
+    }
+
+    .showcase-text {
+        text-align: center; /* Centraliza o texto */
+    }
 }
 
 .showcase-text {
@@ -449,6 +475,7 @@ body {
     font-size: 1.2rem;
     font-family: 'Righteous', cursive;
 }
+
 
 .showcase-text span {
     display: block;

@@ -20,37 +20,53 @@
         .content {
             background: linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, rgba(65, 0, 0, 1) 45%, rgba(177, 0, 0, 1) 100%);
             color: #fff;
-            height: calc(100vh - 70px); /* Define a altura da seção para ocupar a altura total da viewport menos a altura do footer */
+            height: calc(100vh - 37px - 70px); /* Define a altura da seção para ocupar a altura total da viewport menos a altura do footer e da caixa explicativa */
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 2rem;
             box-sizing: border-box;
         }
 
-        .content h1 {
-            font-size: 3rem;
+        .content .wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
+        }
+
+        .content .image {
+            width: 300px; /* Ajuste o tamanho da imagem conforme necessário */
+            height: auto;
+            margin-right: 20px; /* Espaço entre a imagem e a caixa de texto */
+        }
+
+        .content .text-box {
+            background-color: rgba(0, 0, 0, 0.7); /* Caixa preta transparente */
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 500px; /* Ajuste a largura máxima da caixa de texto conforme necessário */
+        }
+
+        .content .text-box h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
             font-family: 'Righteous', cursive;
         }
 
-        .content p {
-            font-size: 1.8rem;
-            text-align: center;
-            margin: 1rem 0;
-            font-family: 'Righteous', cursive;
-        }
-
-        .content ul {
-            list-style: none;
-            padding: 0;
-            text-align: center;
-        }
-
-        .content ul li {
+        .content .text-box p {
             font-size: 1.6rem;
-            margin: 0.5rem 0;
+            font-family: 'Righteous', cursive;
+        }
+
+        /* Estilo para a caixa explicativa */
+        .explanation-box {
+            background-color: rgba(0, 0, 0, 0.8); /* Fundo preto com transparência */
+            color: #fff;
+            padding: 0.5rem;
+            border-radius: 5px;
+            font-size: 1.5rem;
+            text-align: center;
         }
 
         /* Estilo para a navbar */
@@ -107,7 +123,7 @@
                 <ul class="navlinks">
                     <li><a href="showcase.html">Showcase of Excellence</a></li>
                     <li><a href="love.html">With love to you</a></li>
-                    <li><a href="admin.html">ADMIN?</a></li>
+                    <li><a href="admin.html">admin?</a></li>
                     <li><a href="jp.html">愛のギフト</a></li>
                 </ul>
             </div>
@@ -121,41 +137,19 @@
     
     <!-- Seção principal -->
     <section class="content">
-        <h1>Showcase of Excellence</h1>
-        <p>Ah, uma vitrine de excelência, é? Huh, quem teve essa ideia? Estes são os envolvidos? E pensar que vocês realmente acham que eu sou alguém tão importante! Bom, eu posso até dar o braço a torcer e dizer que aprecio todos vocês. Aqui estão os nomes:</p>
-        <div class="showcase-list">
-            <div class="showcase-item">
-                <img src="images/kon.png" alt="Nome 1">
-                <div class="showcase-text">
-                    <p>"Ah Zat, eu amo você, vamos jogar Brawhalla longe do Gab???"</p>
-                    <span>Bárbaraㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</span>
-                </div>
+        <div class="wrapper">
+            <img src="images/imgtest.png" alt="Imagem Vertical" class="image">
+            <div class="text-box">
+                <h2>Feliz Aniversário Zat!</h2>
+                <p>Deixo nessa aba desse site meu presente pra você, um desenho simples que eu tive que fazer correndo pra dar tempo de colocar aqui, espero que goste de todo este projeto e que seu dia seja incrivel e que eu possa te dar muito mais presentes além desse, amo você, obrigada por ser minha primeira amiga de verdade, só tenho a agradecer a você, quero que teu dia seja muito especial hoje e sempre. (Não precisa ficar boiola com isso não, tá bom?)</p>
             </div>
-            <div class="showcase-item">
-                <img src="images/imgtest.png" alt="Nome 2">
-                <div class="showcase-text">
-                    <p>ㅤㅤㅤ"Eu não concordo com isso não, relaxou Bárbara"</p>
-                    <span>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤGab</span>
-                </div>
-            </div>
-            <div class="showcase-item">
-                <img src="images/paixax.jpg" alt="Nome 3">
-                <div class="showcase-text">
-                    <p>ㅤ"Você pode vir dormir na minha casa Gab"</p>
-                    <span>Paixaixㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</span>
-                </div>
-            </div>
-            <div class="showcase-item">
-                <img src="images/kiry.png" alt="Nome 4">
-                <div class="showcase-text">
-                    <p>"Eu posso ir também?"</p>
-                    <span>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤPedro Kiry</span>
-                </div>
-            </div>
-            
-            
         </div>
     </section>
+
+    <!-- Caixa explicativa -->
+    <div class="explanation-box">
+        <s>Obs: " <b>愛のギフト</b>" significa "Presente de Amor".
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
