@@ -41,13 +41,10 @@
 
     <script>
         // Data e hora alvo em horário de Brasília
-        const targetDate = new Date();
-        targetDate.setFullYear(2024, 8, 17); // Ano, mês (0-based, setembro é 8), dia
-        targetDate.setHours(0, 0, 0, 0); // Define para 00:00:00:000
-        targetDate.setTime(targetDate.getTime() - (3 * 60 * 60 * 1000)); // Ajuste para horário de Brasília (GMT-3)
+        const targetDate = new Date('2024-09-17T00:00:00-03:00'); // Data alvo ajustada para GMT-3
 
         function updateCountdown() {
-            const now = new Date().getTime();
+            const now = new Date();
             const timeLeft = targetDate - now;
 
             if (timeLeft <= 0) {
