@@ -19,9 +19,13 @@ app.get('/time', (req, res) => {
 // Rota para servir a página inicial
 app.get('/', (req, res) => {
   const now = new Date();
+  console.log(`Current time: ${now.toISOString()}`); // Log da data/hora atual
+
   if (now >= targetDate) {
+    console.log('Redirecting to index.html');
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
   } else {
+    console.log('Redirecting to /time');
     res.redirect('/time'); // Redireciona para time.html
   }
 });
@@ -40,16 +44,4 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Algo deu errado!');
-});
-
-app.get('/', (req, res) => {
-  const now = new Date();
-  console.log(`Current time: ${now}`);
-  if (now >= targetDate) {
-    console.log('Redirecting to time.html');
-    res.sendFile(path.join(__dirname, 'public', 'time.html'));
-  } else {
-    console.log('Redirecting to countdown');
-    res.redirect('/time');
-  }
 });
