@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const ctx = canvasJogo.getContext('2d');
         const somDano = new Audio('sounds/dano.mp3');
         const somMorte = new Audio('sounds/Morte.mp3');
+        const videofim = new Audio('sounds/videofim.mp3')
 
 
         const imagens = {
@@ -58,7 +59,6 @@ document.addEventListener('DOMContentLoaded', function () {
             comida: new Image(),
             comidaRuim: new Image(),
             fundoPontuacao: new Image(),
-            tela5Pontos: new Image(),
             imagemAceite: new Image()
         };
 
@@ -68,11 +68,15 @@ document.addEventListener('DOMContentLoaded', function () {
         imagens.comida.src = 'images/food.png';
         imagens.comidaRuim.src = 'images/bad-food.png';
         imagens.fundoPontuacao.src = 'images/brush.png';
-        imagens.tela5Pontos.src = 'images/imgtest.png';
         imagens.imagemAceite.src = 'images/aceite.png';
 
         let todasImagensCarregadas = 0;
         const totalImagens = Object.keys(imagens).length;
+        let imagemTempo = 0;
+        
+        imagens.imagemPontos = new Image();
+        imagens.imagemPontos.src = 'images/image.png'; // Substitua pelo caminho da imagem que deseja usar
+
 
         for (const key in imagens) {
             imagens[key].onload = () => {
@@ -97,22 +101,13 @@ document.addEventListener('DOMContentLoaded', function () {
         let pontuacao = 0;
         let vidas = 3;
         let jogoAcabou = false;
+        let mostrarImagem = false;
 
         let teclaDireitaPressionada = false;
         let teclaEsquerdaPressionada = false;
 
-        let tela5PontosExibida = false;
         let jogoPausado = false;
         
-        
-
-        function desenharTela5Pontos() {
-            if (imagens.tela5Pontos.complete) {
-                ctx.fillRect(0, 0, canvasJogo.width, canvasJogo.height);
-                ctx.drawImage(imagens.fundo5Pontos, 0, 0, canvasJogo.width, canvasJogo.height); // Exemplo de fundo
-
-            }
-        }
 
 
         // Restante da função para configurar o jogo, desenhar e atualizar
@@ -171,6 +166,7 @@ document.addEventListener('DOMContentLoaded', function () {
         function cliqueNoBotaoAceitar() {
             ctx.clearRect(0, 0, canvasJogo.width, canvasJogo.height);
             ctx.drawImage(imagens.imagemAceite, 0, 0, canvasJogo.width, canvasJogo.height);
+            jogoPausado();
             console.log("Aceitar clicado!");  // Debug para garantir que o botão está funcionando
         }
 
@@ -181,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 ctx.drawImage(imagens.gameOver, 0, 0, canvasJogo.width, canvasJogo.height);
 
                 // Desenha a pontuação final no meio da tela
-                ctx.font = "bold 20px 'Righteous', sans-serif";
+                ctx.font = "bold 15px, sans-serif";
                 ctx.fillText("Pontuação Final: " + pontuacao, 345, 62);
 
                 // Desenha os botões
@@ -250,7 +246,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     if (mouseX >= posXAceitar && mouseX <= posXAceitar + larguraBotao &&
                         mouseY >= posY && mouseY <= posY + alturaBotao) {
-                        pararMusicaFundo()
                         cliqueNoBotaoAceitar();
                     }
                 });
@@ -329,14 +324,24 @@ document.addEventListener('DOMContentLoaded', function () {
                     comida.x > cesta.x && comida.x < cesta.x + cesta.width) {
                     comidas.splice(index, 1);
                     pontuacao++;
-                    if (pontuacao === 100 && !tela5PontosExibida) {
-                        tela5PontosExibida = true; // Marca a tela como exibida
-                        pararMusicaFundo()
-                        jogoPausado = true
+        
+                    // Se a pontuação chegar a 5, o jogo pausa e o vídeo aparece
+                    if (pontuacao === 5) {
+                        pararMusicaFundo(); // Função para parar a música de fundo
+                        jogoPausado = true; // Pausa o jogo
+                        mostrarImagem = true
+                        
+                        
                     }
-                    aumentarDificuldade();
+        
+                    aumentarDificuldade(); // Aumenta a dificuldade conforme a pontuação
                 }
             });
+        
+            
+            
+
+
         }
         function atualizarComidasRuins() {
             comidasRuins.forEach((comidaRuim, index) => {
@@ -384,11 +389,10 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
+        
+
         function desenhar() {
-            if (tela5PontosExibida) {
-                desenharTela5Pontos();
-                return;
-            }
+            
             if (jogoAcabou) {
                 desenharGameOver();
                 return;
@@ -401,6 +405,14 @@ document.addEventListener('DOMContentLoaded', function () {
             comidasRuins.forEach(desenharComidaRuim);
             desenharPontuacao();
             desenharVidas();
+            if (mostrarImagem) {
+                ctx.drawImage(imagens.imagemPontos, 0, 0, canvasJogo.width, canvasJogo.height);
+                // Reproduz o áudio
+                videofim.play();
+        
+            
+            }
+            
         }
 
         function atualizar() {
@@ -449,5 +461,6 @@ document.addEventListener('DOMContentLoaded', function () {
         function iniciarLoopJogo() {
             loopJogo();
         }
+
     }
 });

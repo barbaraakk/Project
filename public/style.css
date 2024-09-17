@@ -504,6 +504,7 @@ body {
 
 
 
+
 #gameCanvas {
 	display: none;
 	/* Inicialmente escondido */
@@ -513,7 +514,7 @@ body {
 	left: 50%;
 	transform: translate(-50%, -50%);
 	/* Ajusta a posição para realmente centralizar */
-	border: 1px solid #000000;
+	
 	/* Borda opcional para visibilidade */
 }
 
@@ -684,6 +685,22 @@ body {
 	transform: scale(0.95);
 	/* Diminui o botão quando clicado */
 }
+
+.socorro {
+	display: none;
+}
+
+
+/* ... seus estilos CSS ... */
+#videoFinal {
+	display: none;
+	position: fixed; /* Posiciona o vídeo fixo na tela */
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
 
 .hidden {
 	display: none;
