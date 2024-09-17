@@ -41,3 +41,15 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Algo deu errado!');
 });
+
+app.get('/', (req, res) => {
+  const now = new Date();
+  console.log(`Current time: ${now}`);
+  if (now >= targetDate) {
+    console.log('Redirecting to time.html');
+    res.sendFile(path.join(__dirname, 'public', 'time.html'));
+  } else {
+    console.log('Redirecting to countdown');
+    res.redirect('/time');
+  }
+});
