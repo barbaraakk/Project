@@ -326,7 +326,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     pontuacao++;
         
                     // Se a pontuação chegar a 5, o jogo pausa e o vídeo aparece
-                    if (pontuacao === 5) {
+                    if (pontuacao === 100) {
                         pararMusicaFundo(); // Função para parar a música de fundo
                         jogoPausado = true; // Pausa o jogo
                         mostrarImagem = true
