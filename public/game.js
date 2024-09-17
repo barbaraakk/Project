@@ -409,8 +409,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 ctx.drawImage(imagens.imagemPontos, 0, 0, canvasJogo.width, canvasJogo.height);
                 // Reproduz o áudio
                 videofim.play();
-        
-            
             }
             
         }
