@@ -457,8 +457,8 @@ body {
     }
 
     .showcase-item img {
-        width: 60px; /* Ajusta o tamanho da foto para telas menores */
-        height: 60px;
+        width: 90px; /* Ajusta o tamanho da foto para telas menores */
+        height: 70px;
     }
 
     .showcase-text {
@@ -492,8 +492,8 @@ body {
     }
 
     .showcase-item img {
-        width: 60px; /* Ajusta o tamanho da foto para telas menores */
-        height: 60px;
+        width: 70px; /* Ajusta o tamanho da foto para telas menores */
+        height: 70px;
     }
 
     .showcase-text {
